@@ -24,7 +24,7 @@ export default function Navbar() {
             Philo's Delicacy
           </span>
         </Link>
-        <ul className="flex gap-8 list-none m-0 p-0 flex-1 justify-end">
+        <ul className="flex gap-8 list-none m-0 p-0 flex-1 justify-end items-center">
           {navLinks.map((link) => (
             <li key={link.href} className="relative">
               <Link
@@ -35,6 +35,26 @@ export default function Navbar() {
               </Link>
             </li>
           ))}
+          <li>
+            <a
+              href="https://www.swiggy.com/city/kochi/philos-delicacy-kakkanad-rest1076417"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-2 px-4 py-2 bg-[#fc8019] text-white font-semibold rounded-lg transition-colors duration-300 hover:bg-[#e46a0a] hover:text-white text-base"
+            >
+              Order on Swiggy
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://www.zomato.com/kochi/philos-delicacy-kakkanad/order"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-2 px-4 py-2 bg-[#e23744] text-white font-semibold rounded-lg transition-colors duration-300 hover:bg-[#b71c1c] hover:text-white text-base"
+            >
+              Order on Zomato
+            </a>
+          </li>
         </ul>
       </div>
     </nav>

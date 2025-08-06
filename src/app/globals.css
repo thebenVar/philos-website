@@ -15,6 +15,11 @@
   --color-white: #ffffff;
 }
 
+/* Custom Tailwind utility for accent gold */
+.text-accent-gold {
+  color: var(--color-accent-gold) !important;
+}
+
 /* Base Styles */
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;

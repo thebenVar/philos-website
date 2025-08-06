@@ -10,6 +10,9 @@ const inter = Inter({ subsets: ["latin"], display: "swap" });
 export const metadata: Metadata = {
   title: "Philo's Delicacy",
   description: "Savor the Uniqueness",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 export default function RootLayout({
