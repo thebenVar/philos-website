@@ -1,0 +1,51 @@
+# Philos Delicacy Website
+
+purpose:
+  A Next.js website for a restaurant named Philo's Delicacy, showcasing its offerings and providing contact information.
+
+features:
+  homepage:
+    - Hero section with logo, tagline, and CTA buttons (View Menu, WhatsApp Contact)
+    - Signature Dishes section showcasing featured items
+    - Gallery section with images and captions
+    - Reviews (data present, not rendered on homepage)
+    - Modal for enlarged gallery images
+    - Navigation bar and footer components
+
+structure:
+  public:
+    logo.png: Restaurant logo
+    dishes:
+      - pizza.png
+      - sushi.png
+      - teriyaki_sliced_beef_tenderloin.png
+    gallery:
+      - beverage_bar.png
+      - diavola.png
+      - passionfruit_spritzer.png
+      - philos_exterior.png
+      - potato_wedges.png
+      - restaurant.png
+      - spicy_crunchy_tuna_roll.png
+  src:
+    app:
+      - globals.css: Global styles
+      - layout.tsx: App layout
+      - page.tsx: Homepage
+      about/page.tsx: About page
+      contact/page.tsx: Contact page
+      menu/page.tsx: Menu page
+    components:
+      - Navbar.tsx: Navigation bar
+      - Footer.tsx: Footer
+
+dependencies:
+  - next.js
+  - react
+  - (others in package.json)
+
+notes:
+  - Uses Next.js app directory structure
+  - Images are stored in public folder
+  - Styling is mostly inline CSS
+  - Functionality and features can be extended as needed
