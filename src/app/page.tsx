@@ -70,87 +70,105 @@ export default function Home() {
   };
 
   return (
-    <main style={{ background: '#f7f7f7', minHeight: '100vh', fontFamily: 'inherit' }}>
-      {/* Global Gallery Overlay CSS */}
-      <style>{`
-        .gallery-caption-overlay {
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 0.3s;
-        }
-        .gallery-image-card:hover .gallery-caption-overlay,
-        .gallery-image-card:focus .gallery-caption-overlay {
-          opacity: 1 !important;
-          pointer-events: auto !important;
-        }
-      `}</style>
+    <main style={{ background: 'var(--background-light)', minHeight: '100vh', fontFamily: 'inherit' }}>
       {/* Hero Section */}
-      <section style={{ background: '#fff', padding: '48px 0 32px 0', textAlign: 'center', boxShadow: '0 2px 16px rgba(0,0,0,0.04)', marginBottom: '32px' }}>
-        <Image src="/logo.png" alt="Philo's Delicacy Logo" width={120} height={120} style={{ marginBottom: '16px' }} />
-        <h1 style={{ fontSize: '3rem', fontWeight: 'bold', color: '#b91c1c', marginBottom: '12px' }}>Savor The Uniqueness</h1>
-        <p style={{ fontSize: '1.25rem', color: '#444', marginBottom: '24px' }}>A culinary journey from authentic Italian pizzas to exquisite global flavors, right here in the heart of Kakkanad.</p>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '8px' }}>
-          <a href="/menu" style={{ background: '#b91c1c', color: '#fff', padding: '12px 32px', borderRadius: '24px', fontWeight: 'bold', textDecoration: 'none', fontSize: '1.1rem', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>View Menu</a>
-          <a href="/contact" style={{ background: '#fff', color: '#b91c1c', border: '2px solid #b91c1c', padding: '12px 32px', borderRadius: '24px', fontWeight: 'bold', textDecoration: 'none', fontSize: '1.1rem', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>Contact Us</a>
+      <section style={{ 
+        background: 'var(--white)', 
+        padding: 'var(--spacing-2xl) 0 var(--spacing-xl) 0', 
+        textAlign: 'center', 
+        boxShadow: 'var(--shadow-sm)', 
+        marginBottom: 'var(--spacing-xl)' 
+      }}>
+        <Image 
+          src="/logo.png" 
+          alt="Philo's Delicacy Logo" 
+          width={120} 
+          height={120} 
+          style={{ marginBottom: 'var(--spacing-md)' }} 
+        />
+        <h1 style={{ 
+          fontSize: 'var(--font-size-4xl)', 
+          fontWeight: 'bold', 
+          color: 'var(--primary-red)', 
+          marginBottom: 'var(--spacing-sm)' 
+        }}>
+          Savor The Uniqueness
+        </h1>
+        <p style={{ 
+          fontSize: 'var(--font-size-xl)', 
+          color: 'var(--text-medium)', 
+          marginBottom: 'var(--spacing-lg)' 
+        }}>
+          A culinary journey from authentic Italian pizzas to exquisite global flavors, right here in the heart of Kakkanad.
+        </p>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          gap: 'var(--spacing-md)', 
+          marginBottom: 'var(--spacing-xs)' 
+        }}>
+          <a href="/menu" className="btn-primary">View Menu</a>
+          <a href="/contact" className="btn-secondary">Contact Us</a>
         </div>
       </section>
 
       {/* Signature Dishes Section */}
-      <section style={{ maxWidth: '1000px', margin: '0 auto', marginBottom: '48px', padding: '0 16px' }}>
-        <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#b91c1c', textAlign: 'center', marginBottom: '32px' }}>Signature Dishes</h2>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px', justifyContent: 'center' }}>
+      <section className="section">
+        <h2 className="section-title">Signature Dishes</h2>
+        <div className="grid-center">
           {featuredItems.map((item, idx) => (
-            <div key={idx} style={{ width: '260px', background: '#fff', borderRadius: '18px', boxShadow: '0 2px 16px rgba(0,0,0,0.08)', padding: '18px', textAlign: 'center', marginBottom: '8px' }}>
-              <Image src={item.image} alt={item.name} width={220} height={150} style={{ borderRadius: '12px', objectFit: 'cover', marginBottom: '14px' }} />
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#b91c1c', marginBottom: '8px' }}>{item.name}</h3>
-              <p style={{ fontSize: '1rem', color: '#444', marginBottom: 0 }}>{item.description}</p>
+            <div key={idx} className="card" style={{ 
+              width: '260px', 
+              textAlign: 'center' 
+            }}>
+              <Image 
+                src={item.image} 
+                alt={item.name} 
+                width={220} 
+                height={150} 
+                style={{ 
+                  borderRadius: 'var(--border-radius-md)', 
+                  objectFit: 'cover', 
+                  marginBottom: 'var(--spacing-sm)' 
+                }} 
+              />
+              <h3 style={{ 
+                fontSize: 'var(--font-size-xl)', 
+                fontWeight: 'bold', 
+                color: 'var(--primary-red)', 
+                marginBottom: 'var(--spacing-xs)' 
+              }}>
+                {item.name}
+              </h3>
+              <p style={{ 
+                fontSize: 'var(--font-size-sm)', 
+                color: 'var(--text-medium)', 
+                marginBottom: 0 
+              }}>
+                {item.description}
+              </p>
             </div>
           ))}
         </div>
       </section>
       {/* Gallery Section */}
-      <section style={{ maxWidth: '1000px', margin: '0 auto', marginBottom: '48px', padding: '0 16px' }}>
-        <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#b91c1c', textAlign: 'center', marginBottom: '32px' }}>A Glimpse Inside</h2>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '24px', justifyContent: 'center' }}>
+      <section className="section">
+        <h2 className="section-title">A Glimpse Inside</h2>
+        <div className="grid-gallery">
           {galleryImages.map((img, idx) => (
             <div
               key={idx}
               className="gallery-image-card"
-              style={{
-                position: 'relative',
-                borderRadius: '16px',
-                boxShadow: '0 2px 16px rgba(0,0,0,0.06)',
-                overflow: 'hidden',
-                width: '220px',
-                height: '150px',
-                marginBottom: '8px',
-                background: '#fff',
-                cursor: 'pointer',
-              }}
               onClick={() => openModal(img)}
             >
-              <Image src={img.src} alt={img.caption} width={220} height={150} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              <div
-                className="gallery-caption-overlay"
-                style={{
-                  position: 'absolute',
-                  left: 0,
-                  bottom: 0,
-                  width: '100%',
-                  height: '100%',
-                  background: 'rgba(0,0,0,0.6)',
-                  color: '#fff',
-                  opacity: 0,
-                  transition: 'opacity 0.3s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1.1rem',
-                  fontWeight: 500,
-                  textAlign: 'center',
-                  pointerEvents: 'none',
-                }}
-              >
+              <Image 
+                src={img.src} 
+                alt={img.caption} 
+                width={220} 
+                height={150} 
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+              />
+              <div className="gallery-caption-overlay">
                 {img.caption}
               </div>
             </div>
@@ -158,16 +176,34 @@ export default function Home() {
         </div>
       </section>
       {/* Reviews Section */}
-      <section style={{ maxWidth: '700px', margin: '0 auto', marginBottom: '48px', padding: '0 16px' }}>
-        <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#b91c1c', textAlign: 'center', marginBottom: '32px' }}>What Our Guests Say</h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <section className="section-narrow">
+        <h2 className="section-title">What Our Guests Say</h2>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
           {reviews.map((review, idx) => (
-            <div key={idx} style={{ background: '#fff', borderRadius: '16px', boxShadow: '0 2px 16px rgba(0,0,0,0.06)', padding: '24px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-              <div style={{ fontWeight: 'bold', color: '#b91c1c', fontSize: '1.1rem', marginBottom: '6px' }}>{review.name}</div>
+            <div key={idx} className="card" style={{ alignItems: 'flex-start' }}>
+              <div style={{ 
+                fontWeight: 'bold', 
+                color: 'var(--primary-red)', 
+                fontSize: 'var(--font-size-lg)', 
+                marginBottom: 'var(--spacing-xs)' 
+              }}>
+                {review.name}
+              </div>
               {review.rating && (
-                <div style={{ color: '#fbbf24', fontSize: '1.1rem', marginBottom: '6px' }}>{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</div>
+                <div style={{ 
+                  color: 'var(--gold)', 
+                  fontSize: 'var(--font-size-lg)', 
+                  marginBottom: 'var(--spacing-xs)' 
+                }}>
+                  {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
+                </div>
               )}
-              <div style={{ color: '#444', fontSize: '1.05rem' }}>{review.text}</div>
+              <div style={{ 
+                color: 'var(--text-medium)', 
+                fontSize: 'var(--font-size-md)' 
+              }}>
+                {review.text}
+              </div>
             </div>
           ))}
         </div>
@@ -183,7 +219,7 @@ export default function Home() {
             left: 0,
             width: '100vw',
             height: '100vh',
-            background: 'rgba(0,0,0,0.7)',
+            background: 'var(--overlay)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -193,10 +229,10 @@ export default function Home() {
           <div
             onClick={e => e.stopPropagation()}
             style={{
-              background: '#fff',
-              borderRadius: '18px',
-              boxShadow: '0 4px 32px rgba(0,0,0,0.18)',
-              padding: '24px',
+              background: 'var(--white)',
+              borderRadius: 'var(--border-radius-xl)',
+              boxShadow: 'var(--shadow-xl)',
+              padding: 'var(--spacing-lg)',
               maxWidth: '90vw',
               maxHeight: '80vh',
               display: 'flex',
@@ -204,11 +240,32 @@ export default function Home() {
               alignItems: 'center',
             }}
           >
-            <Image src={modalImg.src} alt={modalImg.caption} width={600} height={400} style={{ maxWidth: '80vw', maxHeight: '60vh', borderRadius: '12px', objectFit: 'contain', marginBottom: '18px' }} />
-            <div style={{ fontSize: '1.3rem', fontWeight: 600, color: '#b91c1c', textAlign: 'center', marginBottom: '8px' }}>{modalImg.caption}</div>
+            <Image 
+              src={modalImg.src} 
+              alt={modalImg.caption} 
+              width={600} 
+              height={400} 
+              style={{ 
+                maxWidth: '80vw', 
+                maxHeight: '60vh', 
+                borderRadius: 'var(--border-radius-md)', 
+                objectFit: 'contain', 
+                marginBottom: 'var(--spacing-lg)' 
+              }} 
+            />
+            <div style={{ 
+              fontSize: 'var(--font-size-xl)', 
+              fontWeight: 600, 
+              color: 'var(--primary-red)', 
+              textAlign: 'center', 
+              marginBottom: 'var(--spacing-xs)' 
+            }}>
+              {modalImg.caption}
+            </div>
             <button
               onClick={closeModal}
-              style={{ marginTop: '8px', background: '#b91c1c', color: '#fff', border: 'none', borderRadius: '8px', padding: '8px 20px', fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer' }}
+              className="btn-primary"
+              style={{ marginTop: 'var(--spacing-xs)' }}
             >
               Close
             </button>
