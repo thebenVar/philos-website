@@ -36,17 +36,24 @@ const galleryImages = [
 
 const reviews = [
   {
-    name: "Akhil P.",
-    text: "Amazing food and great hospitality! Highly recommend Philos Delicacy.",
+    name: "Catherine Chacko",
+    text: "Tried the pork ribs and Chef’s Special Pizza from Philo's Delicacy — both were fantastic! The pizza was loaded with toppings, each flavor standing out yet blending beautifully. You can tell the chef truly knows what he’s doing. He was very hospitable and made the whole experience feel warm and special. Will definitely be back! Food: 5 Service: 5 Atmosphere: 5",
+    rating: 5,
   },
   {
-    name: "Meera S.",
-    text: "Authentic Kerala flavors, cozy ambiance, and friendly staff.",
+    name: "Rahul Raj",
+    text: "I was never a pizza lover, but after trying the pizza at this cafe in Kochi, I’m now a big fan.Best pizza in Kochi... superb, worth it.Must try \"chef special pizza\" Food: 5 Service: 5 Atmosphere: 5",
+    rating: 5
   },
   {
-    name: "John D.",
-    text: "The Sadya was a highlight. Will visit again!",
-  },
+    name: "Sohail Zakir",
+    text: "Philo's Delicacy has been an experience unlike anything else. If you haven’t tried it yet, you are seriously missing out. We’ve been making our way through different items on the menu each visit, and every single dish has been a wow wow wow moment.\
+    If you're going for the first time, I highly recommend trying the sushi, quesadilla, and pizza – each one is a standout in its own right. But if you can only get one thing, make it the sushi. It’s god tier. Hands down the best we’ve ever had.\n\
+    Philo’s is more than just a meal – it’s an experience worth savoring.\n\
+    \nFood: 5/5 Service: 5/5 Atmosphere: 5/5",
+    rating: 5
+  }
+
 ];
 
 export default function Home() {
@@ -150,6 +157,22 @@ export default function Home() {
           ))}
         </div>
       </section>
+      {/* Reviews Section */}
+      <section style={{ maxWidth: '700px', margin: '0 auto', marginBottom: '48px', padding: '0 16px' }}>
+        <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#b91c1c', textAlign: 'center', marginBottom: '32px' }}>What Our Guests Say</h2>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          {reviews.map((review, idx) => (
+            <div key={idx} style={{ background: '#fff', borderRadius: '16px', boxShadow: '0 2px 16px rgba(0,0,0,0.06)', padding: '24px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <div style={{ fontWeight: 'bold', color: '#b91c1c', fontSize: '1.1rem', marginBottom: '6px' }}>{review.name}</div>
+              {review.rating && (
+                <div style={{ color: '#fbbf24', fontSize: '1.1rem', marginBottom: '6px' }}>{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</div>
+              )}
+              <div style={{ color: '#444', fontSize: '1.05rem' }}>{review.text}</div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Modal for enlarged gallery image */}
       {modalOpen && modalImg && (
         <div
