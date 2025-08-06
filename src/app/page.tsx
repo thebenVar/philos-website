@@ -1,5 +1,7 @@
 
 
+
+import { useState } from "react";
 import Image from "next/image";
 
 const featuredItems = [
@@ -47,21 +49,31 @@ const reviews = [
 ];
 
 export default function Home() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalImg, setModalImg] = useState(null);
+
+  const openModal = (img) => {
+    setModalImg(img);
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+    setModalImg(null);
+  };
+
   return (
     <main style={{ background: '#f7f7f7', minHeight: '100vh', fontFamily: 'inherit' }}>
       {/* Global Gallery Overlay CSS */}
       <style>{`
-        .gallery-caption-overlay:hover, .gallery-caption-overlay:focus {
-          opacity: 1 !important;
-          pointer-events: auto;
-        }
         .gallery-caption-overlay {
           opacity: 0;
           pointer-events: none;
+          transition: opacity 0.3s;
         }
-        .gallery-image-card:hover > .gallery-caption-overlay {
-          opacity: 1;
-          pointer-events: auto;
+        .gallery-image-card:hover .gallery-caption-overlay,
+        .gallery-image-card:focus .gallery-caption-overlay {
+          opacity: 1 !important;
+          pointer-events: auto !important;
         }
       `}</style>
       {/* Hero Section */}
@@ -91,7 +103,9 @@ export default function Home() {
                 height: '150px',
                 marginBottom: '8px',
                 background: '#fff',
+                cursor: 'pointer',
               }}
+              onClick={() => openModal(img)}
             >
               <Image src={img.src} alt={img.caption} width={220} height={150} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               <div
@@ -121,6 +135,48 @@ export default function Home() {
           ))}
         </div>
       </section>
+      {/* Modal for enlarged gallery image */}
+      {modalOpen && modalImg && (
+        <div
+          onClick={closeModal}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            background: 'rgba(0,0,0,0.7)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 9999,
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              background: '#fff',
+              borderRadius: '18px',
+              boxShadow: '0 4px 32px rgba(0,0,0,0.18)',
+              padding: '24px',
+              maxWidth: '90vw',
+              maxHeight: '80vh',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+            }}
+          >
+            <Image src={modalImg.src} alt={modalImg.caption} width={600} height={400} style={{ maxWidth: '80vw', maxHeight: '60vh', borderRadius: '12px', objectFit: 'contain', marginBottom: '18px' }} />
+            <div style={{ fontSize: '1.3rem', fontWeight: 600, color: '#b91c1c', textAlign: 'center', marginBottom: '8px' }}>{modalImg.caption}</div>
+            <button
+              onClick={closeModal}
+              style={{ marginTop: '8px', background: '#b91c1c', color: '#fff', border: 'none', borderRadius: '8px', padding: '8px 20px', fontWeight: 'bold', fontSize: '1rem', cursor: 'pointer' }}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
