@@ -70,43 +70,23 @@ export default function Home() {
   };
 
   return (
-    <main style={{ background: 'var(--background-light)', minHeight: '100vh', fontFamily: 'inherit' }}>
+    <main className="min-h-screen" style={{ background: '#f7f7f7' }}>
       {/* Hero Section */}
-      <section style={{ 
-        background: 'var(--white)', 
-        padding: 'var(--spacing-2xl) 0 var(--spacing-xl) 0', 
-        textAlign: 'center', 
-        boxShadow: 'var(--shadow-sm)', 
-        marginBottom: 'var(--spacing-xl)' 
-      }}>
+      <section className="bg-white py-12 px-8 text-center mb-8" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
         <Image 
           src="/logo.png" 
           alt="Philo's Delicacy Logo" 
           width={120} 
           height={120} 
-          style={{ marginBottom: 'var(--spacing-md)' }} 
+          className="mb-4 mx-auto" 
         />
-        <h1 style={{ 
-          fontSize: 'var(--font-size-4xl)', 
-          fontWeight: 'bold', 
-          color: 'var(--primary-red)', 
-          marginBottom: 'var(--spacing-sm)' 
-        }}>
+        <h1 className="text-5xl font-bold mb-3" style={{ color: '#b91c1c' }}>
           Savor The Uniqueness
         </h1>
-        <p style={{ 
-          fontSize: 'var(--font-size-xl)', 
-          color: 'var(--text-medium)', 
-          marginBottom: 'var(--spacing-lg)' 
-        }}>
+        <p className="text-xl mb-6" style={{ color: '#444' }}>
           A culinary journey from authentic Italian pizzas to exquisite global flavors, right here in the heart of Kakkanad.
         </p>
-        <div style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          gap: 'var(--spacing-md)', 
-          marginBottom: 'var(--spacing-xs)' 
-        }}>
+        <div className="flex justify-center gap-4 mb-2">
           <a href="/menu" className="btn-primary">View Menu</a>
           <a href="/contact" className="btn-secondary">Contact Us</a>
         </div>
@@ -117,34 +97,19 @@ export default function Home() {
         <h2 className="section-title">Signature Dishes</h2>
         <div className="grid-center">
           {featuredItems.map((item, idx) => (
-            <div key={idx} className="card" style={{ 
-              width: '260px', 
-              textAlign: 'center' 
-            }}>
+            <div key={idx} className="card text-center" style={{ width: '260px' }}>
               <Image 
                 src={item.image} 
                 alt={item.name} 
                 width={220} 
                 height={150} 
-                style={{ 
-                  borderRadius: 'var(--border-radius-md)', 
-                  objectFit: 'cover', 
-                  marginBottom: 'var(--spacing-sm)' 
-                }} 
+                className="object-cover mb-3 mx-auto" 
+                style={{ borderRadius: '12px' }}
               />
-              <h3 style={{ 
-                fontSize: 'var(--font-size-xl)', 
-                fontWeight: 'bold', 
-                color: 'var(--primary-red)', 
-                marginBottom: 'var(--spacing-xs)' 
-              }}>
+              <h3 className="text-xl font-bold mb-2" style={{ color: '#b91c1c' }}>
                 {item.name}
               </h3>
-              <p style={{ 
-                fontSize: 'var(--font-size-sm)', 
-                color: 'var(--text-medium)', 
-                marginBottom: 0 
-              }}>
+              <p className="text-base mb-0" style={{ color: '#444' }}>
                 {item.description}
               </p>
             </div>
@@ -166,7 +131,7 @@ export default function Home() {
                 alt={img.caption} 
                 width={220} 
                 height={150} 
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                className="w-full h-full object-cover" 
               />
               <div className="gallery-caption-overlay">
                 {img.caption}
@@ -175,33 +140,22 @@ export default function Home() {
           ))}
         </div>
       </section>
+      
       {/* Reviews Section */}
       <section className="section-narrow">
         <h2 className="section-title">What Our Guests Say</h2>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--spacing-lg)' }}>
+        <div className="flex flex-col gap-6">
           {reviews.map((review, idx) => (
-            <div key={idx} className="card" style={{ alignItems: 'flex-start' }}>
-              <div style={{ 
-                fontWeight: 'bold', 
-                color: 'var(--primary-red)', 
-                fontSize: 'var(--font-size-lg)', 
-                marginBottom: 'var(--spacing-xs)' 
-              }}>
+            <div key={idx} className="card">
+              <div className="font-bold text-lg mb-2" style={{ color: '#b91c1c' }}>
                 {review.name}
               </div>
               {review.rating && (
-                <div style={{ 
-                  color: 'var(--gold)', 
-                  fontSize: 'var(--font-size-lg)', 
-                  marginBottom: 'var(--spacing-xs)' 
-                }}>
+                <div className="text-lg mb-2" style={{ color: '#fbbf24' }}>
                   {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
                 </div>
               )}
-              <div style={{ 
-                color: 'var(--text-medium)', 
-                fontSize: 'var(--font-size-md)' 
-              }}>
+              <div className="text-base" style={{ color: '#444' }}>
                 {review.text}
               </div>
             </div>
@@ -213,59 +167,25 @@ export default function Home() {
       {modalOpen && modalImg && (
         <div
           onClick={closeModal}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            background: 'var(--overlay)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 9999,
-          }}
+          className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-[9999]"
         >
           <div
             onClick={e => e.stopPropagation()}
-            style={{
-              background: 'var(--white)',
-              borderRadius: 'var(--border-radius-xl)',
-              boxShadow: 'var(--shadow-xl)',
-              padding: 'var(--spacing-lg)',
-              maxWidth: '90vw',
-              maxHeight: '80vh',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
+            className="bg-white rounded-xl shadow-xl p-6 max-w-[90vw] max-h-[80vh] flex flex-col items-center"
           >
             <Image 
               src={modalImg.src} 
               alt={modalImg.caption} 
               width={600} 
               height={400} 
-              style={{ 
-                maxWidth: '80vw', 
-                maxHeight: '60vh', 
-                borderRadius: 'var(--border-radius-md)', 
-                objectFit: 'contain', 
-                marginBottom: 'var(--spacing-lg)' 
-              }} 
+              className="max-w-[80vw] max-h-[60vh] rounded-md object-contain mb-6" 
             />
-            <div style={{ 
-              fontSize: 'var(--font-size-xl)', 
-              fontWeight: 600, 
-              color: 'var(--primary-red)', 
-              textAlign: 'center', 
-              marginBottom: 'var(--spacing-xs)' 
-            }}>
+            <div className="text-xl font-semibold text-primary-red text-center mb-2">
               {modalImg.caption}
             </div>
             <button
               onClick={closeModal}
-              className="btn-primary"
-              style={{ marginTop: 'var(--spacing-xs)' }}
+              className="btn-primary mt-2"
             >
               Close
             </button>

@@ -10,78 +10,26 @@ export default function Navbar() {
     { href: '/contact', label: 'Contact' },
   ];
 
-  const navbarStyle = {
-    background: 'var(--white)',
-    boxShadow: 'var(--shadow-sm)',
-    padding: `0 var(--spacing-xl)`,
-    position: 'sticky' as const,
-    top: 0,
-    zIndex: 100
-  };
-
-  const containerStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    height: '80px',
-    maxWidth: '1200px',
-    margin: '0 auto'
-  };
-
-  const logoStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    marginRight: 'var(--spacing-xl)',
-    textDecoration: 'none'
-  };
-
-  const logoTextStyle = {
-    fontWeight: 'bold',
-    fontSize: 'var(--font-size-2xl)',
-    color: 'var(--primary-red)',
-    letterSpacing: '1px',
-    marginLeft: 'var(--spacing-sm)'
-  };
-
-  const navListStyle = {
-    display: 'flex',
-    gap: 'var(--spacing-xl)',
-    listStyle: 'none',
-    margin: 0,
-    padding: 0,
-    flex: 1,
-    justifyContent: 'flex-end'
-  };
-
-  const navLinkStyle = {
-    color: 'var(--text-dark)',
-    fontWeight: '500',
-    fontSize: 'var(--font-size-lg)',
-    textDecoration: 'none',
-    padding: 'var(--spacing-xs) 0',
-    transition: `color var(--transition-fast)`,
-    borderBottom: '2px solid transparent',
-    display: 'inline-block'
-  };
-
   return (
-    <nav style={navbarStyle}>
-      <div style={containerStyle}>
-        <Link href="/" style={logoStyle}>
+    <nav className="bg-white shadow-sm px-8 sticky top-0 z-50">
+      <div className="flex items-center h-20 max-w-6xl mx-auto">
+        <Link href="/" className="flex items-center mr-8 no-underline">
           <Image 
             src="/logo.png" 
             alt="Philos Delicacy Logo" 
             width={60} 
             height={60} 
           />
-          <span style={logoTextStyle}>Philo's Delicacy</span>
+          <span className="font-bold text-2xl text-primary-red tracking-wide ml-3">
+            Philo's Delicacy
+          </span>
         </Link>
-        <ul style={navListStyle}>
+        <ul className="flex gap-8 list-none m-0 p-0 flex-1 justify-end">
           {navLinks.map((link) => (
-            <li key={link.href} style={{ position: 'relative' }}>
+            <li key={link.href} className="relative">
               <Link
                 href={link.href}
-                style={navLinkStyle}
-                className="nav-link-custom"
+                className="text-text-dark font-medium text-lg no-underline py-2 transition-colors duration-200 border-b-2 border-transparent inline-block nav-link-custom"
               >
                 {link.label}
               </Link>
