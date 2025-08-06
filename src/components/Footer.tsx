@@ -21,10 +21,10 @@ export default function Footer() {
         <div>
           <h4 className="font-semibold text-lg mb-2 text-accent-gold">Contact Info</h4>
           <ul className="text-sm text-gray-300 space-y-1">
-            <li>123 Italian Street, Little Italy, NY 10013</li>
-            <li>(555) 123-PIZZA</li>
+            <li>8/4166, Vayanasala Road, Edachira, Kakkanad, Cochin 682030</li>
+            <li>8891655177</li>
             <li>
-              <a href="mailto:info@philosdelicacy.com" className="hover:underline text-accent-gold">info@philosdelicacy.com</a>
+              <a href="mailto:philosdelicacy@gmail.com" className="hover:underline text-accent-gold">philosdelicacy@gmail.com</a>
             </li>
           </ul>
         </div>
@@ -33,9 +33,8 @@ export default function Footer() {
         <div>
           <h4 className="font-semibold text-lg mb-2 text-accent-gold">Opening Hours</h4>
           <ul className="text-sm text-gray-300 space-y-1">
-            <li>Mon - Thu: 11:00 AM - 10:00 PM</li>
-            <li>Fri - Sat: 11:00 AM - 11:00 PM</li>
-            <li>Sunday: 12:00 PM - 9:00 PM</li>
+            <li>Mon - Sat: 12:00 PM - 11:00 PM</li>
+            <li>Sunday: Closed</li>
           </ul>
         </div>
 
@@ -73,9 +72,15 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center mt-6 text-sm text-gray-400">
+      <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center mt-6 text-sm text-gray-400 gap-2">
         <span>© 2025 Philo's Delicacy. All rights reserved. Savor the Uniqueness.</span>
-        <span className="mt-2 md:mt-0">Made with <span className="text-accent-gold">&#10084;</span> in Kakkanad</span>
+        <span className="flex items-center gap-2 mt-2 md:mt-0">
+          <span className="inline-flex items-center h-8 px-3 rounded-full" style={{ background: '#e0e7ef' }}>
+            <img src="/fssai.png" alt="FSSAI Logo" className="h-6 w-6 object-contain mr-2" />
+            <span className="text-xs font-semibold text-accent-gold tracking-wider">11325007000632</span>
+          </span>
+        </span>
+        <span className="mt-2 md:mt-0">Made with <span className="text-accent-gold">&#10084;</span> by benVar</span>
       </div>
     </footer>
   );

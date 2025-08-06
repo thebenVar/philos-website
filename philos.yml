@@ -12,6 +12,12 @@ features:
     - Modal for enlarged gallery images with close functionality
     - Navigation bar and footer components
 
+
+contact_info:
+  address: 8/4166, Vayanasala Road, Edachira, Kakkanad, Cochin 682030
+  phone: 8891655177
+  email: philosdelicacy@gmail.com
+
 structure:
   public:
     logo.png: Restaurant logo

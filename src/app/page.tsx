@@ -1,9 +1,32 @@
 
 
-
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import { FaUsers, FaUtensils, FaChalkboardTeacher, FaBriefcase } from "react-icons/fa";
+
+const specialServices = [
+  {
+    icon: <FaUsers className="text-4xl text-accent-gold mb-3" />,
+    title: "Private Events",
+    description: "Host your special occasion in our private dining room (up to 40 guests)",
+  },
+  {
+    icon: <FaUtensils className="text-4xl text-accent-gold mb-3" />,
+    title: "Catering Services",
+    description: "Bring authentic Italian flavors to your office or event",
+  },
+  {
+    icon: <FaChalkboardTeacher className="text-4xl text-accent-gold mb-3" />,
+    title: "Cooking Classes",
+    description: "Learn to make authentic Italian pizza and pasta from our chefs",
+  },
+  {
+    icon: <FaBriefcase className="text-4xl text-accent-gold mb-3" />,
+    title: "Corporate Lunch",
+    description: "Special lunch packages for business meetings and corporate events",
+  },
+];
 
 const featuredItems = [
   {
@@ -202,6 +225,23 @@ export default function Home() {
           ))}
         </div>
       </section>
+      {/* Special Services Section */}
+      <section className="section bg-white rounded-xl shadow-lg my-12">
+        <h2 className="section-title mb-8">Special Services</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          {specialServices.map((service, idx) => (
+            <div key={idx} className="card flex flex-col items-center text-center p-8 shadow-md hover:shadow-xl transition-shadow duration-300">
+              {service.icon}
+              <h3 className="text-xl font-bold mb-2 text-primary-red">{service.title}</h3>
+              <p className="text-gray-700 text-base mb-0">{service.description}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex justify-center mt-8">
+          <a href="/special-services" className="btn-primary">Learn More</a>
+        </div>
+      </section>
+
       {/* Gallery Section */}
       <section className="section">
         <h2 className="section-title">A Glimpse Inside</h2>
