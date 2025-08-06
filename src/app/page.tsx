@@ -119,23 +119,39 @@ export default function Home() {
   return (
     <main className="min-h-screen" style={{ background: '#f7f7f7' }}>
       {/* Hero Section */}
-      <section className="bg-white py-12 px-8 text-center mb-8" style={{ boxShadow: '0 2px 8px rgba(0,0,0,0.04)' }}>
-        <Image 
-          src="/logo.png" 
-          alt="Philo's Delicacy Logo" 
-          width={120} 
-          height={120} 
-          className="mb-4 mx-auto" 
-        />
-        <h1 className="text-5xl font-bold mb-3" style={{ color: '#b91c1c' }}>
-          Savor The Uniqueness
-        </h1>
-        <p className="text-xl mb-6" style={{ color: '#444' }}>
-          A culinary journey from authentic Italian pizzas to exquisite global flavors, right here in the heart of Kakkanad.
-        </p>
-        <div className="flex justify-center gap-4 mb-2">
-          <a href="/menu" className="btn-primary">View Menu</a>
-          <a href="/contact" className="btn-secondary">Contact Us</a>
+      <section
+        className="relative py-12 px-8 text-center mb-8 flex flex-col items-center justify-center"
+        style={{ minHeight: 420 }}
+      >
+        <div className="absolute inset-0 w-full h-full z-0">
+          <Image
+            src="/gallery/forno.png"
+            alt="Wood-fired Forno Oven"
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center' }}
+            className="pointer-events-none select-none"
+            priority
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+        <div className="relative z-10 w-full flex flex-col items-center">
+          <Image
+            src="/logo.png"
+            alt="Philo's Delicacy Logo"
+            width={120}
+            height={120}
+            className="mb-4 mx-auto"
+          />
+          <h1 className="text-5xl font-bold mb-3" style={{ color: '#b91c1c' }}>
+            Savor The Uniqueness
+          </h1>
+          <p className="text-xl mb-6" style={{ color: '#fff', textShadow: '0 2px 8px rgba(0,0,0,0.25)' }}>
+            A culinary journey from authentic Italian pizzas to exquisite global flavors, right here in the heart of Kakkanad.
+          </p>
+          <div className="flex justify-center gap-4 mb-2">
+            <a href="/menu" className="btn-primary">View Menu</a>
+            <a href="/contact" className="btn-primary">Contact Us</a>
+          </div>
         </div>
       </section>
 
