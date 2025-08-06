@@ -2,7 +2,7 @@
 
 
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 const featuredItems = [
@@ -59,6 +59,30 @@ const reviews = [
 export default function Home() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImg, setModalImg] = useState(null);
+  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
+
+  // Auto-advance slider every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentReviewIndex((prevIndex) => 
+        prevIndex === reviews.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const nextReview = () => {
+    setCurrentReviewIndex(
+      currentReviewIndex === reviews.length - 1 ? 0 : currentReviewIndex + 1
+    );
+  };
+
+  const prevReview = () => {
+    setCurrentReviewIndex(
+      currentReviewIndex === 0 ? reviews.length - 1 : currentReviewIndex - 1
+    );
+  };
 
   const openModal = (img) => {
     setModalImg(img);
@@ -89,6 +113,68 @@ export default function Home() {
         <div className="flex justify-center gap-4 mb-2">
           <a href="/menu" className="btn-primary">View Menu</a>
           <a href="/contact" className="btn-secondary">Contact Us</a>
+        </div>
+      </section>
+
+      {/* Reviews Slider Section */}
+      <section className="py-12 px-4 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-center mb-8" style={{ color: '#b91c1c' }}>
+            What Our Guests Say
+          </h2>
+          <div className="relative">
+            {/* Review Card */}
+            <div className="bg-white rounded-xl shadow-lg p-8 mx-auto max-w-2xl">
+              <div className="flex items-center justify-between mb-6">
+                <button
+                  onClick={prevReview}
+                  className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                  style={{ color: '#b91c1c' }}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                  </svg>
+                </button>
+                
+                <div className="flex-1 text-center">
+                  <div className="font-bold text-xl mb-2" style={{ color: '#b91c1c' }}>
+                    {reviews[currentReviewIndex].name}
+                  </div>
+                  <div className="text-2xl mb-4" style={{ color: '#fbbf24' }}>
+                    {'★'.repeat(reviews[currentReviewIndex].rating)}{'☆'.repeat(5 - reviews[currentReviewIndex].rating)}
+                  </div>
+                  <p className="text-gray-700 leading-relaxed">
+                    {reviews[currentReviewIndex].text}
+                  </p>
+                </div>
+                
+                <button
+                  onClick={nextReview}
+                  className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
+                  style={{ color: '#b91c1c' }}
+                >
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+                  </svg>
+                </button>
+              </div>
+              
+              {/* Pagination Dots */}
+              <div className="flex justify-center space-x-2">
+                {reviews.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentReviewIndex(index)}
+                    className={`w-3 h-3 rounded-full transition-colors ${
+                      index === currentReviewIndex 
+                        ? 'bg-red-700' 
+                        : 'bg-gray-300 hover:bg-gray-400'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -135,28 +221,6 @@ export default function Home() {
               />
               <div className="gallery-caption-overlay">
                 {img.caption}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-      
-      {/* Reviews Section */}
-      <section className="section-narrow">
-        <h2 className="section-title">What Our Guests Say</h2>
-        <div className="flex flex-col gap-6">
-          {reviews.map((review, idx) => (
-            <div key={idx} className="card">
-              <div className="font-bold text-lg mb-2" style={{ color: '#b91c1c' }}>
-                {review.name}
-              </div>
-              {review.rating && (
-                <div className="text-lg mb-2" style={{ color: '#fbbf24' }}>
-                  {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
-                </div>
-              )}
-              <div className="text-base" style={{ color: '#444' }}>
-                {review.text}
               </div>
             </div>
           ))}
