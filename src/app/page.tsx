@@ -7,19 +7,19 @@ import Image from "next/image";
 
 const featuredItems = [
   {
-    name: "Kerala Sadya",
-    description: "Traditional Kerala feast with a variety of vegetarian dishes.",
-    image: "/sadya.jpg",
+    name: "Wood-fired Pizza",
+    description: "Signature Italian pizza baked in our wood-fired oven.",
+    image: "/dishes/pizza.png",
   },
   {
-    name: "Malabar Chicken Biryani",
-    description: "Aromatic rice and tender chicken cooked with Malabar spices.",
-    image: "/biryani.jpg",
+    name: "Spicy Crunchy Tuna Sushi",
+    description: "Authentic Japanese sushi with a spicy crunchy twist.",
+    image: "/dishes/sushi.png",
   },
   {
-    name: "Appam & Stew",
-    description: "Soft appams served with creamy vegetable stew.",
-    image: "/appam.jpg",
+    name: "Teriyaki Sliced Beef Tenderloin",
+    description: "Premium beef tenderloin glazed with teriyaki sauce.",
+    image: "/dishes/teriyaki_sliced_beef_tenderloin.png",
   },
 ];
 
@@ -85,6 +85,20 @@ export default function Home() {
         <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '8px' }}>
           <a href="/menu" style={{ background: '#b91c1c', color: '#fff', padding: '12px 32px', borderRadius: '24px', fontWeight: 'bold', textDecoration: 'none', fontSize: '1.1rem', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>View Menu</a>
           <a href="/contact" style={{ background: '#fff', color: '#b91c1c', border: '2px solid #b91c1c', padding: '12px 32px', borderRadius: '24px', fontWeight: 'bold', textDecoration: 'none', fontSize: '1.1rem', boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>Contact Us</a>
+        </div>
+      </section>
+
+      {/* Signature Dishes Section */}
+      <section style={{ maxWidth: '1000px', margin: '0 auto', marginBottom: '48px', padding: '0 16px' }}>
+        <h2 style={{ fontSize: '2rem', fontWeight: 'bold', color: '#b91c1c', textAlign: 'center', marginBottom: '32px' }}>Signature Dishes</h2>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px', justifyContent: 'center' }}>
+          {featuredItems.map((item, idx) => (
+            <div key={idx} style={{ width: '260px', background: '#fff', borderRadius: '18px', boxShadow: '0 2px 16px rgba(0,0,0,0.08)', padding: '18px', textAlign: 'center', marginBottom: '8px' }}>
+              <Image src={item.image} alt={item.name} width={220} height={150} style={{ borderRadius: '12px', objectFit: 'cover', marginBottom: '14px' }} />
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#b91c1c', marginBottom: '8px' }}>{item.name}</h3>
+              <p style={{ fontSize: '1rem', color: '#444', marginBottom: 0 }}>{item.description}</p>
+            </div>
+          ))}
         </div>
       </section>
       {/* Gallery Section */}
