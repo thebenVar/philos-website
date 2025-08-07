@@ -4,18 +4,27 @@ purpose:
   A Next.js website for a restaurant named Philo's Delicacy, showcasing its offerings and providing contact information.
 
 features:
-  homepage:
-    - Hero section with logo, tagline, and CTA buttons (View Menu, Contact Us)
-    - Signature Dishes section showcasing featured items with images
-    - Gallery section with images, captions, and modal functionality
-    - Customer Reviews section with Google Maps reviews and star ratings
-    - Modal for enlarged gallery images with close functionality
-    - Navigation bar and footer components
+homepage:
+  - Hero section with logo, tagline, and CTA buttons (View Menu, Contact Us)
+  - Signature Dishes section showcasing featured items with images
+  - Gallery section with images, captions, and modal functionality
+  - Customer Reviews section with Google Maps reviews and star ratings
+  - Modal for enlarged gallery images with close functionality
+  - Navigation bar and footer components
+
+menu_page:
+  - Responsive grid layout for menu items grouped by category
+  - Category filtering: Clickable category list to filter menu items
+  - Visual tags/badges for items (Premium, Best Selling, New Addition, Discount Available, etc.)
+  - Related items: Show suggestions for complementary dishes when a user selects an item
+  - Combo offers: Bundle related items into combos with special pricing
+  - Individual ratings: Allow users to rate dishes and display average ratings per item
 
 
 contact_info:
   address: 8/4166, Vayanasala Road, Edachira, Kakkanad, Cochin 682030
-  phone: 8891655177
+  phone: +918891655177
+  whatsapp: https://wa.me/918891655177
   email: philosdelicacy@gmail.com
 
 structure:
@@ -85,11 +94,18 @@ recent_changes:
     - CSS file corruption and recreation
 
 notes:
+
   - Uses Next.js app directory structure
   - Images are stored in public folder
   - Hybrid styling approach: Tailwind + CSS variables + inline styles
   - Development server runs on port 3000/3001
   - Branch: tailwindcss (active development branch)
+  - Menu UX enhancements planned:
+    - Related items: Show suggestions for complementary dishes when a user selects an item.
+    - Combo offers: Bundle related items into combos with special pricing.
+    - Individual ratings: Allow users to rate dishes and display average ratings per item.
+    - Filtering: Category list for filtering menu items by type.
+    - Tags: Visual badges for items (Premium, Best Selling, New Addition, Discount Available, etc.)
 
 next_improvements:
   immediate_priorities:

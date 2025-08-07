@@ -1,4 +1,4 @@
-
+"use client";
 const menuData = [
   { category: "Add ons", items: [
     { name: "Beef", price: 120 },
@@ -158,23 +158,84 @@ const menuData = [
   ]},
 ];
 
+
+
+import { useState } from "react";
+
 export default function MenuPage() {
+  // Placeholder image mapping by category (can be improved later)
+  const imageMap = {
+    "Asian": "/gallery/teriyaki_sliced_beef_tenderloin.png",
+    "Authentic Japanese Sushi": "/gallery/spicy_crunchy_tuna_roll.png",
+    "BEVERAGES": "/gallery/beverage_bar.png",
+    "Mains": "/gallery/restaurant.png",
+    "Non Veg Pizzas": "/gallery/diavola.png",
+    "Pastas": "/gallery/potato_wedges.png",
+    "Ramen Bowls": "/gallery/forno.png",
+    "Sides": "/gallery/potato_wedges.png",
+    "Veg Pizzas": "/gallery/pizza.png",
+    "Western": "/gallery/forno1.png",
+    "Wraps/Burger": "/gallery/forno2.png",
+    "Add ons": "/gallery/forno.png",
+  };
+
+  // Placeholder description
+  const getDescription = (itemName) => `A delicious choice, prepared with fresh ingredients.`;
+
+  // Category filtering state
+  const categories = menuData.map((cat) => cat.category);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+
+  // Filtered menu data
+  const filteredMenu =
+    selectedCategory === "All"
+      ? menuData
+      : menuData.filter((cat) => cat.category === selectedCategory);
+
   return (
-    <div style={{ maxWidth: '900px', margin: '0 auto', padding: '32px' }}>
-      <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '32px', color: '#b91c1c', textAlign: 'center' }}>Menu</h1>
-      {menuData.map((cat) => (
-        <section key={cat.category} style={{ marginBottom: '40px' }}>
-          <h2 style={{ fontSize: '1.5rem', fontWeight: '600', color: '#b91c1c', marginBottom: '16px' }}>{cat.category}</h2>
-          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '8px' }}>
-            <tbody>
-              {cat.items.map((item) => (
-                <tr key={item.name}>
-                  <td style={{ padding: '8px 4px', borderBottom: '1px solid #eee', fontWeight: '500' }}>{item.name}</td>
-                  <td style={{ padding: '8px 4px', borderBottom: '1px solid #eee', textAlign: 'right', color: '#444' }}>₹{item.price}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+    <div className="max-w-5xl mx-auto px-4 py-10">
+      <h1 className="text-4xl font-bold mb-10 text-red-700 text-center">Menu</h1>
+
+      {/* Category Filter Buttons */}
+      <div className="flex flex-wrap justify-center gap-3 mb-10">
+        <button
+          className={`px-4 py-2 rounded-full border font-semibold transition-colors text-sm ${selectedCategory === "All" ? "bg-red-700 text-white" : "bg-white text-red-700 border-red-700 hover:bg-red-50"}`}
+          onClick={() => setSelectedCategory("All")}
+        >
+          All
+        </button>
+        {categories.map((cat) => (
+          <button
+            key={cat}
+            className={`px-4 py-2 rounded-full border font-semibold transition-colors text-sm ${selectedCategory === cat ? "bg-red-700 text-white" : "bg-white text-red-700 border-red-700 hover:bg-red-50"}`}
+            onClick={() => setSelectedCategory(cat)}
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
+      {/* Menu Sections */}
+      {filteredMenu.map((cat) => (
+        <section key={cat.category} className="mb-14">
+          <h2 className="text-2xl font-semibold text-red-700 mb-6">{cat.category}</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+            {cat.items.map((item) => (
+              <div key={item.name} className="bg-white rounded-xl shadow hover:shadow-lg transition p-4 flex flex-col items-center">
+                <img
+                  src={imageMap[cat.category] || "/gallery/restaurant.png"}
+                  alt={item.name}
+                  className="w-28 h-28 object-cover rounded mb-4 border"
+                  loading="lazy"
+                />
+                <div className="w-full flex flex-col items-center">
+                  <h3 className="text-lg font-bold text-gray-800 mb-1 text-center">{item.name}</h3>
+                  <p className="text-sm text-gray-500 mb-2 text-center">{getDescription(item.name)}</p>
+                  <span className="text-red-700 font-semibold text-base">₹{item.price}</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </section>
       ))}
     </div>
