@@ -208,16 +208,64 @@ const imageMap = {
 
   // Cart state
   const [cart, setCart] = useState([]);
-  const addToCart = (item, category) => {
-    setCart((prev) => [...prev, { ...item, category }]);
+  const [addSuccess, setAddSuccess] = useState(false);
+  const [showCart, setShowCart] = useState(false);
+  const [selectedAddons, setSelectedAddons] = useState([]);
+  const [showAddonSelector, setShowAddonSelector] = useState(false);
+  const [pendingBaseItem, setPendingBaseItem] = useState(null);
+  const [pendingBaseCategory, setPendingBaseCategory] = useState(null);
+  // Quantity state for all items (key: item name + category)
+  const [quantities, setQuantities] = useState({});
+
+  // Helper: determine if base item is veg or non-veg
+  const isVeg = (category, name) => {
+    if (category === "Veg Pizzas" || category === "Pastas") return true;
+    if (category === "Non Veg Pizzas") return false;
+    // For other categories, default to true
+    return true;
+  };
+
+  // Helper: filter addons by veg/non-veg
+  const getCompatibleAddons = (isVegBase) => {
+    const allAddons = menuData.find((cat) => cat.category === "Add ons")?.items || [];
+    if (isVegBase) {
+      // Only veg addons
+      return allAddons.filter((addon) => !addon.name.toLowerCase().includes("beef") && !addon.name.toLowerCase().includes("chicken") && !addon.name.toLowerCase().includes("pork") && !addon.name.toLowerCase().includes("sausage") && !addon.name.toLowerCase().includes("pepperoni"));
+    } else {
+      // All addons
+      return allAddons;
+    }
+  };
+
+  const addToCart = (item, category, quantity, addons=[]) => {
+    if (!quantity || quantity < 1) return;
+    setCart((prev) => {
+      // If item already in cart, update quantity
+      const idx = prev.findIndex((ci) => ci.name === item.name && ci.category === category && JSON.stringify(ci.addons) === JSON.stringify(addons));
+      if (idx > -1) {
+        const updated = [...prev];
+        updated[idx].quantity += quantity;
+        return updated;
+      }
+      return [...prev, { ...item, category, quantity, addons }];
+    });
+    setAddSuccess(true);
+    setTimeout(() => setAddSuccess(false), 1200);
+    setSelectedAddons([]);
+    setShowAddonSelector(false);
+    setPendingBaseItem(null);
+    setPendingBaseCategory(null);
   };
   const removeFromCart = (index) => {
     setCart((prev) => prev.filter((_, i) => i !== index));
   };
-  const cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
+  const cartTotal = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1) + (item.addons ? item.addons.reduce((a, b) => a + b.price * (item.quantity || 1), 0) : 0), 0);
 
   // Filtered menu data
-  let filteredMenu = selectedCategory === "All" ? menuData : menuData.filter((cat) => cat.category === selectedCategory);
+  let filteredMenu = menuData;
+  if (selectedCategory !== "All") {
+    filteredMenu = menuData.filter((cat) => cat.category === selectedCategory);
+  }
   if (selectedTag) {
     filteredMenu = filteredMenu
       .map((cat) => ({
@@ -233,24 +281,69 @@ const imageMap = {
 
       {/* Cart Summary */}
       <div className="bg-gray-50 border rounded-lg p-4 mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-        <div className="font-semibold text-lg text-gray-700">Cart: {cart.length} item{cart.length !== 1 ? "s" : ""}</div>
+        <div className="font-semibold text-lg text-gray-700">Cart: {cart.reduce((sum, item) => sum + (item.quantity || 1), 0)} item{cart.reduce((sum, item) => sum + (item.quantity || 1), 0) !== 1 ? "s" : ""}</div>
         <div className="text-gray-600">Total: <span className="text-red-700 font-bold">₹{cartTotal}</span></div>
-        {cart.length > 0 && (
-          <div className="mt-2 sm:mt-0">
-            <ul className="flex flex-wrap gap-2">
-              {cart.map((item, idx) => (
-                <li key={idx} className="bg-white border rounded px-2 py-1 text-xs flex items-center gap-2">
-                  <span>{item.name}</span>
-                  <span className="text-red-700">₹{item.price}</span>
-                  <button className="ml-1 text-gray-400 hover:text-red-700" title="Remove" onClick={() => removeFromCart(idx)}>
-                    ×
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <button
+          className="mt-2 sm:mt-0 px-4 py-1 bg-blue-700 text-white rounded-full text-sm font-semibold hover:bg-blue-800 transition"
+          onClick={() => setShowCart(true)}
+          disabled={cart.length === 0}
+        >
+          View Cart
+        </button>
       </div>
+
+      {/* View Cart Modal */}
+      {showCart && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
+            <h3 className="text-lg font-bold mb-4 text-center">Your Cart</h3>
+            {cart.length === 0 ? (
+              <div className="text-gray-500 text-center">Your cart is empty.</div>
+            ) : (
+              <ul className="mb-4">
+                {cart.map((item, idx) => (
+                  <li key={idx} className="border-b py-2 flex flex-col gap-1">
+                    <div className="flex justify-between items-center">
+                      <span className="font-semibold">{item.name}</span>
+                      <span className="text-gray-500">x{item.quantity || 1}</span>
+                      <span className="text-red-700 font-semibold">₹{item.price * (item.quantity || 1)}</span>
+                      <button className="ml-2 text-gray-400 hover:text-red-700" title="Remove" onClick={() => removeFromCart(idx)}>
+                        ×
+                      </button>
+                    </div>
+                    {item.addons && item.addons.length > 0 && (
+                      <div className="pl-4 text-xs text-gray-600">
+                        Addons:
+                        <ul>
+                          {item.addons.map((addon, aidx) => (
+                            <li key={aidx} className="flex justify-between">
+                              <span>{addon.name}</span>
+                              <span>₹{addon.price * (item.quantity || 1)}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+            <div className="text-right font-bold text-lg text-red-700 mb-4">Total: ₹{cartTotal}</div>
+            <div className="flex justify-center gap-2">
+              <button
+                className="px-4 py-1 bg-gray-300 text-gray-700 rounded-full text-sm font-semibold"
+                onClick={() => setShowCart(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* Add to Cart Success Toast */}
+      {addSuccess && (
+        <div className="fixed top-6 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-2 rounded shadow-lg z-50 transition">Item added to cart!</div>
+      )}
 
       {/* Category Filter Buttons */}
       <div className="flex flex-wrap justify-center gap-3 mb-6">
@@ -291,57 +384,133 @@ const imageMap = {
       )}
 
       {/* Menu Sections */}
-      {filteredMenu.map((cat) => (
-        <section key={cat.category} className="mb-14">
-          <h2 className="text-2xl font-semibold text-red-700 mb-6">{cat.category}</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {cat.items.map((item) => (
-              <div key={item.name} className="bg-white rounded-xl shadow hover:shadow-lg transition p-4 flex flex-col items-center">
-                <img
-                  src={imageMap[cat.category] || "/gallery/restaurant.png"}
-                  alt={item.name}
-                  className="w-28 h-28 object-cover rounded mb-4 border"
-                  loading="lazy"
-                />
-                <div className="w-full flex flex-col items-center">
-                  <h3 className="text-lg font-bold text-gray-800 mb-1 text-center">{item.name}</h3>
-                  {/* Visual tags/badges */}
-                  {item.tags && (
-                    <div className="flex flex-wrap gap-1 mb-2 justify-center">
-                      {item.tags.map((tag) => (
-                        <span
-                          key={tag}
-                          className={`px-2 py-0.5 rounded-full text-xs font-semibold border ${
-                            tag === "Premium"
-                              ? "bg-yellow-100 text-yellow-800 border-yellow-300"
-                              : tag === "Best Selling"
-                              ? "bg-red-100 text-red-700 border-red-300"
-                              : tag === "New Addition"
-                              ? "bg-green-100 text-green-700 border-green-300"
-                              : tag === "Discount Available"
-                              ? "bg-blue-100 text-blue-700 border-blue-300"
-                              : "bg-gray-100 text-gray-700 border-gray-300"
-                          }`}
+      {filteredMenu
+        .filter((cat) => cat.category !== "Add ons")
+        .map((cat) => (
+          <section key={cat.category} className="mb-14">
+            <h2 className="text-2xl font-semibold text-red-700 mb-6">{cat.category}</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+              {cat.items.map((item) => {
+                const itemKey = `${cat.category}-${item.name}`;
+                const quantity = quantities[itemKey] || 1;
+                const isPizzaOrPasta = cat.category === "Veg Pizzas" || cat.category === "Non Veg Pizzas" || cat.category === "Pastas";
+                return (
+                  <div key={item.name} className="bg-white rounded-xl shadow hover:shadow-lg transition p-4 flex flex-col items-center">
+                    <img
+                      src={imageMap[cat.category] || "/gallery/restaurant.png"}
+                      alt={item.name}
+                      className="w-28 h-28 object-cover rounded mb-4 border"
+                      loading="lazy"
+                    />
+                    <div className="w-full flex flex-col items-center">
+                      <h3 className="text-lg font-bold text-gray-800 mb-1 text-center">{item.name}</h3>
+                      {/* Visual tags/badges */}
+                      {item.tags && (
+                        <div className="flex flex-wrap gap-1 mb-2 justify-center">
+                          {item.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className={`px-2 py-0.5 rounded-full text-xs font-semibold border ${
+                                tag === "Premium"
+                                  ? "bg-yellow-100 text-yellow-800 border-yellow-300"
+                                  : tag === "Best Selling"
+                                  ? "bg-red-100 text-red-700 border-red-300"
+                                  : tag === "New Addition"
+                                  ? "bg-green-100 text-green-700 border-green-300"
+                                  : tag === "Discount Available"
+                                  ? "bg-blue-100 text-blue-700 border-blue-300"
+                                  : "bg-gray-100 text-gray-700 border-gray-300"
+                              }`}
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+                      <p className="text-sm text-gray-500 mb-2 text-center">{getDescription(item.name)}</p>
+                      <span className="text-red-700 font-semibold text-base">₹{item.price}</span>
+                      <div className="flex items-center gap-2 mt-2">
+                        <input
+                          type="number"
+                          min={1}
+                          value={quantity}
+                          onChange={e => {
+                            const val = Math.max(1, Number(e.target.value));
+                            setQuantities((prev) => ({ ...prev, [itemKey]: val }));
+                          }}
+                          className="w-16 px-2 py-1 border rounded text-sm text-center"
+                        />
+                        <button
+                          className="px-4 py-1 bg-red-700 text-white rounded-full text-sm font-semibold hover:bg-red-800 transition"
+                          onClick={() => {
+                            if (isPizzaOrPasta) {
+                              setShowAddonSelector(true);
+                              setPendingBaseItem(item);
+                              setPendingBaseCategory(cat.category);
+                            } else {
+                              addToCart(item, cat.category, quantity);
+                            }
+                          }}
                         >
-                          {tag}
-                        </span>
-                      ))}
+                          Add to Cart
+                        </button>
+                      </div>
                     </div>
-                  )}
-                  <p className="text-sm text-gray-500 mb-2 text-center">{getDescription(item.name)}</p>
-                  <span className="text-red-700 font-semibold text-base">₹{item.price}</span>
-                  <button
-                    className="mt-2 px-4 py-1 bg-red-700 text-white rounded-full text-sm font-semibold hover:bg-red-800 transition"
-                    onClick={() => addToCart(item, cat.category)}
-                  >
-                    Add to Cart
-                  </button>
-                </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section>
+        ))}
+
+      {/* Addon Selector Modal */}
+      {showAddonSelector && pendingBaseItem && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+            <h3 className="text-lg font-bold mb-4 text-center">Select Addons for {pendingBaseItem.name}</h3>
+            <div className="mb-4">
+              <div className="grid grid-cols-2 gap-2">
+                {getCompatibleAddons(isVeg(pendingBaseCategory, pendingBaseItem.name)).map((addon) => (
+                  <label key={addon.name} className="flex items-center gap-2 border rounded px-2 py-1">
+                    <input
+                      type="checkbox"
+                      checked={selectedAddons.some((a) => a.name === addon.name)}
+                      onChange={e => {
+                        if (e.target.checked) {
+                          setSelectedAddons((prev) => [...prev, addon]);
+                        } else {
+                          setSelectedAddons((prev) => prev.filter((a) => a.name !== addon.name));
+                        }
+                      }}
+                    />
+                    <span>{addon.name}</span>
+                    <span className="text-red-700 font-semibold">₹{addon.price}</span>
+                  </label>
+                ))}
               </div>
-            ))}
+            </div>
+            <div className="flex gap-2 justify-center">
+              <button
+                className="px-4 py-1 bg-red-700 text-white rounded-full text-sm font-semibold hover:bg-red-800 transition"
+                onClick={() => addToCart(pendingBaseItem, pendingBaseCategory, 1, selectedAddons)}
+              >
+                Add to Cart
+              </button>
+              <button
+                className="px-4 py-1 bg-gray-300 text-gray-700 rounded-full text-sm font-semibold"
+                onClick={() => {
+                  setShowAddonSelector(false);
+                  setSelectedAddons([]);
+                  setPendingBaseItem(null);
+                  setPendingBaseCategory(null);
+                }}
+              >
+                Cancel
+              </button>
+            </div>
           </div>
-        </section>
-      ))}
+        </div>
+      )}
     </div>
   );
 }
