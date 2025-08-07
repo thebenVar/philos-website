@@ -19,6 +19,7 @@ menu_page:
   - Related items: Show suggestions for complementary dishes when a user selects an item
   - Combo offers: Bundle related items into combos with special pricing
   - Individual ratings: Allow users to rate dishes and display average ratings per item
+  - Personalized highlights: Optionally highlight items based on visitor interest (previous selections, searches, etc.) for future sprint
 
 
 contact_info:

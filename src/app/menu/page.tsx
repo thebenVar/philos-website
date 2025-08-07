@@ -55,54 +55,54 @@ export default function MenuPage() {
       { name: "Stuffed Chicken Roulade", price: 490 },
     ]},
     { category: "Non Veg Pizzas", items: [
-      { name: "Bbq Chicken Pizza (10 Inch)", price: 575 },
-      { name: "Bbq Chicken Pizza (12 Inch)", price: 725 },
-      { name: "Bbq Chicken Pizza (8 Inch)", price: 425 },
-      { name: "Capricciosa (10 Inch)", price: 575 },
-      { name: "Capricciosa (12 Inch)", price: 700 },
-      { name: "Capricciosa (8 Inch)", price: 425 },
-      { name: "Chef Special Pizza (10 Inch)", price: 675, tags: ["Premium", "Best Selling"] },
-      { name: "Chef Special Pizza (12 Inch)", price: 875 },
-      { name: "Chef Special Pizza (8 Inch)", price: 575 },
-      { name: "Chefs/jamican", price: 812 },
-      { name: "Chicken Tikka Pizza (10 Inch)", price: 600 },
-      { name: "Chicken Tikka Pizza (12 Inch)", price: 750 },
-      { name: "Chicken Tikka Pizza (8 Inch)", price: 450 },
-      { name: "Classic Pork (10 Inch)", price: 675 },
-      { name: "Classic Pork (12 Inch)", price: 875 },
-      { name: "Classic Pork (8 Inch)", price: 550 },
-      { name: "Diavola (10 Inch)", price: 600 },
-      { name: "Diavola (12 Inch)", price: 750 },
-      { name: "Diavola (8 Inch)", price: 475 },
-      { name: "Gamberetti (10 Inch)", price: 675 },
-      { name: "Gamberetti (12 Inch)", price: 875 },
-      { name: "Gamberetti (8 Inch)", price: 575 },
-      { name: "Italian Salsiccia (10 Inch)", price: 575 },
-      { name: "Italian Salsiccia (12 Inch)", price: 700 },
-      { name: "Italian Salsiccia (8 Inch)", price: 425 },
-      { name: "Jamaican Jerk Pizza (10 Inch)", price: 550 },
-      { name: "Jamaican Jerk Pizza (12 Inch)", price: 750 },
-      { name: "Jamaican Jerk Pizza (8 Inch)", price: 425 },
-      { name: "Lebanese Chicken Pizza (10 Inch)", price: 575 },
-      { name: "Lebanese Chicken Pizza (12 Inch)", price: 750 },
-      { name: "Lebanese Chicken Pizza (8 Inch)", price: 450 },
-      { name: "Make Your Own Pizza", price: 1200 },
-      { name: "Meat Lovers Pizza (10 Inch)", price: 900 },
-      { name: "Meat Lovers Pizza (12 Inch)", price: 1250 },
-      { name: "Meat Lovers Pizza (8 Inch)", price: 700 },
-      { name: "Pepperoni (10 Inch)", price: 575 },
-      { name: "Pepperoni (12 Inch)", price: 750 },
-      { name: "Pepperoni (8 Inch)", price: 425 },
-      { name: "Porchetta (10 Inch)", price: 675 },
-      { name: "Porchetta (12 Inch)", price: 875 },
-      { name: "Porchetta (8 Inch)", price: 550 },
-      { name: "Quattro Formaggi/ Chefspecial", price: 500 },
-      { name: "Signature Bolognese Pizza (10 Inch)", price: 650 },
-      { name: "Signature Bolognese Pizza (12 Inch)", price: 825 },
-      { name: "Signature Bolognese Pizza (8 Inch)", price: 490 },
-      { name: "Turkish Meat Pizza (10 Inch)", price: 650 },
-      { name: "Turkish Meat Pizza (12 Inch)", price: 825 },
-      { name: "Turkish Meat Pizza (8 Inch)", price: 490 },
+      { name: "Bbq Chicken Pizza (10 Inch)", price: 575, related: { beverage: "Blue Lagoon", side: "Potato Wedges", addon: "Double Cheese" } },
+      { name: "Bbq Chicken Pizza (12 Inch)", price: 725, related: { beverage: "Iced Tea", side: "French Fries", addon: "Olives" } },
+      { name: "Bbq Chicken Pizza (8 Inch)", price: 425, related: { beverage: "Sprite", side: "Garlic Bread", addon: "Jalepino" } },
+      { name: "Capricciosa (10 Inch)", price: 575, related: { beverage: "Virgin Mojito", side: "Loaded Fries", addon: "Mushroom" } },
+      { name: "Capricciosa (12 Inch)", price: 700, related: { beverage: "King Alphonso", side: "Truffle Fries", addon: "Pepperoni Pork/chicken" } },
+      { name: "Capricciosa (8 Inch)", price: 425, related: { beverage: "Pina Colada", side: "Garlic Bread (half)", addon: "Sweet Corn" } },
+      { name: "Chef Special Pizza (10 Inch)", price: 675, tags: ["Premium", "Best Selling"], related: { beverage: "Passionfruit Spritzer", side: "Chilly Cheese Toast", addon: "Chicken" } },
+      { name: "Chef Special Pizza (12 Inch)", price: 875, related: { beverage: "Mango Basil Blossom", side: "Veg Soup", addon: "Broccoli" } },
+      { name: "Chef Special Pizza (8 Inch)", price: 575, related: { beverage: "Irish Coffee Delight", side: "Masala Omelet", addon: "Sausage Chicken/pork" } },
+      { name: "Chefs/jamican", price: 812, related: { beverage: "Fresh Lime", side: "Potato Wedges", addon: "Chicken (small)" } },
+      { name: "Chicken Tikka Pizza (10 Inch)", price: 600, related: { beverage: "Blue Lagoon", side: "Loaded Fries", addon: "Double Cheese" } },
+      { name: "Chicken Tikka Pizza (12 Inch)", price: 750, related: { beverage: "Iced Tea", side: "French Fries", addon: "Olives" } },
+      { name: "Chicken Tikka Pizza (8 Inch)", price: 450, related: { beverage: "Sprite", side: "Garlic Bread", addon: "Jalepino" } },
+      { name: "Classic Pork (10 Inch)", price: 675, related: { beverage: "Virgin Mojito", side: "Loaded Fries", addon: "Mushroom" } },
+      { name: "Classic Pork (12 Inch)", price: 875, related: { beverage: "King Alphonso", side: "Truffle Fries", addon: "Pepperoni Pork/chicken" } },
+      { name: "Classic Pork (8 Inch)", price: 550, related: { beverage: "Pina Colada", side: "Garlic Bread (half)", addon: "Sweet Corn" } },
+      { name: "Diavola (10 Inch)", price: 600, related: { beverage: "Passionfruit Spritzer", side: "Chilly Cheese Toast", addon: "Chicken" } },
+      { name: "Diavola (12 Inch)", price: 750, related: { beverage: "Mango Basil Blossom", side: "Veg Soup", addon: "Broccoli" } },
+      { name: "Diavola (8 Inch)", price: 475, related: { beverage: "Irish Coffee Delight", side: "Masala Omelet", addon: "Sausage Chicken/pork" } },
+      { name: "Gamberetti (10 Inch)", price: 675, related: { beverage: "Fresh Lime", side: "Potato Wedges", addon: "Chicken (small)" } },
+      { name: "Gamberetti (12 Inch)", price: 875, related: { beverage: "Blue Lagoon", side: "Loaded Fries", addon: "Double Cheese" } },
+      { name: "Gamberetti (8 Inch)", price: 575, related: { beverage: "Iced Tea", side: "French Fries", addon: "Olives" } },
+      { name: "Italian Salsiccia (10 Inch)", price: 575, related: { beverage: "Sprite", side: "Garlic Bread", addon: "Jalepino" } },
+      { name: "Italian Salsiccia (12 Inch)", price: 700, related: { beverage: "Virgin Mojito", side: "Loaded Fries", addon: "Mushroom" } },
+      { name: "Italian Salsiccia (8 Inch)", price: 425, related: { beverage: "King Alphonso", side: "Truffle Fries", addon: "Pepperoni Pork/chicken" } },
+      { name: "Jamaican Jerk Pizza (10 Inch)", price: 550, related: { beverage: "Pina Colada", side: "Garlic Bread (half)", addon: "Sweet Corn" } },
+      { name: "Jamaican Jerk Pizza (12 Inch)", price: 750, related: { beverage: "Passionfruit Spritzer", side: "Chilly Cheese Toast", addon: "Chicken" } },
+      { name: "Jamaican Jerk Pizza (8 Inch)", price: 425, related: { beverage: "Mango Basil Blossom", side: "Veg Soup", addon: "Broccoli" } },
+      { name: "Lebanese Chicken Pizza (10 Inch)", price: 575, related: { beverage: "Irish Coffee Delight", side: "Masala Omelet", addon: "Sausage Chicken/pork" } },
+      { name: "Lebanese Chicken Pizza (12 Inch)", price: 750, related: { beverage: "Fresh Lime", side: "Potato Wedges", addon: "Chicken (small)" } },
+      { name: "Lebanese Chicken Pizza (8 Inch)", price: 450, related: { beverage: "Blue Lagoon", side: "Loaded Fries", addon: "Double Cheese" } },
+      { name: "Make Your Own Pizza", price: 1200, related: { beverage: "Iced Tea", side: "French Fries", addon: "Olives" } },
+      { name: "Meat Lovers Pizza (10 Inch)", price: 900, related: { beverage: "Sprite", side: "Garlic Bread", addon: "Jalepino" } },
+      { name: "Meat Lovers Pizza (12 Inch)", price: 1250, related: { beverage: "Virgin Mojito", side: "Loaded Fries", addon: "Mushroom" } },
+      { name: "Meat Lovers Pizza (8 Inch)", price: 700, related: { beverage: "King Alphonso", side: "Truffle Fries", addon: "Pepperoni Pork/chicken" } },
+      { name: "Pepperoni (10 Inch)", price: 575, related: { beverage: "Pina Colada", side: "Garlic Bread (half)", addon: "Sweet Corn" } },
+      { name: "Pepperoni (12 Inch)", price: 750, related: { beverage: "Passionfruit Spritzer", side: "Chilly Cheese Toast", addon: "Chicken" } },
+      { name: "Pepperoni (8 Inch)", price: 425, related: { beverage: "Mango Basil Blossom", side: "Veg Soup", addon: "Broccoli" } },
+      { name: "Porchetta (10 Inch)", price: 675, related: { beverage: "Irish Coffee Delight", side: "Masala Omelet", addon: "Sausage Chicken/pork" } },
+      { name: "Porchetta (12 Inch)", price: 875, related: { beverage: "Fresh Lime", side: "Potato Wedges", addon: "Chicken (small)" } },
+      { name: "Porchetta (8 Inch)", price: 550, related: { beverage: "Blue Lagoon", side: "Loaded Fries", addon: "Double Cheese" } },
+      { name: "Quattro Formaggi/ Chefspecial", price: 500, related: { beverage: "Iced Tea", side: "French Fries", addon: "Olives" } },
+      { name: "Signature Bolognese Pizza (10 Inch)", price: 650, related: { beverage: "Sprite", side: "Garlic Bread", addon: "Jalepino" } },
+      { name: "Signature Bolognese Pizza (12 Inch)", price: 825, related: { beverage: "Virgin Mojito", side: "Loaded Fries", addon: "Mushroom" } },
+      { name: "Signature Bolognese Pizza (8 Inch)", price: 490, related: { beverage: "King Alphonso", side: "Truffle Fries", addon: "Pepperoni Pork/chicken" } },
+      { name: "Turkish Meat Pizza (10 Inch)", price: 650, related: { beverage: "Pina Colada", side: "Garlic Bread (half)", addon: "Sweet Corn" } },
+      { name: "Turkish Meat Pizza (12 Inch)", price: 825, related: { beverage: "Passionfruit Spritzer", side: "Chilly Cheese Toast", addon: "Chicken" } },
+      { name: "Turkish Meat Pizza (8 Inch)", price: 490, related: { beverage: "Mango Basil Blossom", side: "Veg Soup", addon: "Broccoli" } },
     ]},
     { category: "Pastas", items: [
       { name: "Chefs Signature Spaghetti Bolognese", price: 450 },
@@ -126,24 +126,24 @@ export default function MenuPage() {
       { name: "Veg Soup", price: 220 },
     ]},
     { category: "Veg Pizzas", items: [
-      { name: "Grilled Paneer (10 Inch)", price: 525 },
-      { name: "Grilled Paneer (12 Inch)", price: 650 },
-      { name: "Grilled Paneer (8 Inch)", price: 375 },
-      { name: "Margherita (10 Inch)", price: 450 },
-      { name: "Margherita (12 Inch)", price: 600 },
-      { name: "Margherita (8 Inch)", price: 325 },
-      { name: "Melanzane (10 Inch)", price: 450 },
-      { name: "Melanzane (12 Inch)", price: 550 },
-      { name: "Melanzane (8 Inch)", price: 350 },
-      { name: "Premavera (10 Inch)", price: 525 },
-      { name: "Premavera (12 Inch)", price: 650 },
-      { name: "Premavera (8 Inch)", price: 375 },
-      { name: "Quattro Formaggi (10 Inch)", price: 575 },
-      { name: "Quattro Formaggi (12 Inch)", price: 725 },
-      { name: "Quattro Formaggi (8 Inch)", price: 425 },
-      { name: "Wild Mushroom (10 Inch)", price: 525 },
-      { name: "Wild Mushroom (12 Inch)", price: 650 },
-      { name: "Wild Mushroom (8 Inch)", price: 375 },
+      { name: "Grilled Paneer (10 Inch)", price: 525, related: { beverage: "Blue Lagoon", side: "Potato Wedges", addon: "Double Cheese" } },
+      { name: "Grilled Paneer (12 Inch)", price: 650, related: { beverage: "Iced Tea", side: "French Fries", addon: "Olives" } },
+      { name: "Grilled Paneer (8 Inch)", price: 375, related: { beverage: "Sprite", side: "Garlic Bread", addon: "Jalepino" } },
+      { name: "Margherita (10 Inch)", price: 450, related: { beverage: "Virgin Mojito", side: "Loaded Fries", addon: "Mushroom" } },
+      { name: "Margherita (12 Inch)", price: 600, related: { beverage: "King Alphonso", side: "Truffle Fries", addon: "Pepperoni Pork/chicken" } },
+      { name: "Margherita (8 Inch)", price: 325, related: { beverage: "Pina Colada", side: "Garlic Bread (half)", addon: "Sweet Corn" } },
+      { name: "Melanzane (10 Inch)", price: 450, related: { beverage: "Passionfruit Spritzer", side: "Chilly Cheese Toast", addon: "Chicken" } },
+      { name: "Melanzane (12 Inch)", price: 550, related: { beverage: "Mango Basil Blossom", side: "Veg Soup", addon: "Broccoli" } },
+      { name: "Melanzane (8 Inch)", price: 350, related: { beverage: "Irish Coffee Delight", side: "Masala Omelet", addon: "Sausage Chicken/pork" } },
+      { name: "Premavera (10 Inch)", price: 525, related: { beverage: "Fresh Lime", side: "Potato Wedges", addon: "Chicken (small)" } },
+      { name: "Premavera (12 Inch)", price: 650, related: { beverage: "Blue Lagoon", side: "Loaded Fries", addon: "Double Cheese" } },
+      { name: "Premavera (8 Inch)", price: 375, related: { beverage: "Iced Tea", side: "French Fries", addon: "Olives" } },
+      { name: "Quattro Formaggi (10 Inch)", price: 575, related: { beverage: "Sprite", side: "Garlic Bread", addon: "Jalepino" } },
+      { name: "Quattro Formaggi (12 Inch)", price: 725, related: { beverage: "Virgin Mojito", side: "Loaded Fries", addon: "Mushroom" } },
+      { name: "Quattro Formaggi (8 Inch)", price: 425, related: { beverage: "King Alphonso", side: "Truffle Fries", addon: "Pepperoni Pork/chicken" } },
+      { name: "Wild Mushroom (10 Inch)", price: 525, related: { beverage: "Pina Colada", side: "Garlic Bread (half)", addon: "Sweet Corn" } },
+      { name: "Wild Mushroom (12 Inch)", price: 650, related: { beverage: "Passionfruit Spritzer", side: "Chilly Cheese Toast", addon: "Chicken" } },
+      { name: "Wild Mushroom (8 Inch)", price: 375, related: { beverage: "Mango Basil Blossom", side: "Veg Soup", addon: "Broccoli" } },
     ]},
     { category: "Western", items: [
       { name: "Cajun Fried Prawns", price: 380 },
@@ -180,6 +180,7 @@ const imageMap = {
   const getDescription = (itemName) => `A delicious choice, prepared with fresh ingredients.`;
 
 
+
   // Category filtering state
   const categories = menuData.map((cat) => cat.category);
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -205,6 +206,16 @@ const imageMap = {
     return acc;
   }, {});
 
+  // Cart state
+  const [cart, setCart] = useState([]);
+  const addToCart = (item, category) => {
+    setCart((prev) => [...prev, { ...item, category }]);
+  };
+  const removeFromCart = (index) => {
+    setCart((prev) => prev.filter((_, i) => i !== index));
+  };
+  const cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
+
   // Filtered menu data
   let filteredMenu = selectedCategory === "All" ? menuData : menuData.filter((cat) => cat.category === selectedCategory);
   if (selectedTag) {
@@ -220,6 +231,26 @@ const imageMap = {
     <div className="max-w-5xl mx-auto px-4 py-10">
       <h1 className="text-4xl font-bold mb-10 text-red-700 text-center">Menu</h1>
 
+      {/* Cart Summary */}
+      <div className="bg-gray-50 border rounded-lg p-4 mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+        <div className="font-semibold text-lg text-gray-700">Cart: {cart.length} item{cart.length !== 1 ? "s" : ""}</div>
+        <div className="text-gray-600">Total: <span className="text-red-700 font-bold">₹{cartTotal}</span></div>
+        {cart.length > 0 && (
+          <div className="mt-2 sm:mt-0">
+            <ul className="flex flex-wrap gap-2">
+              {cart.map((item, idx) => (
+                <li key={idx} className="bg-white border rounded px-2 py-1 text-xs flex items-center gap-2">
+                  <span>{item.name}</span>
+                  <span className="text-red-700">₹{item.price}</span>
+                  <button className="ml-1 text-gray-400 hover:text-red-700" title="Remove" onClick={() => removeFromCart(idx)}>
+                    ×
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
 
       {/* Category Filter Buttons */}
       <div className="flex flex-wrap justify-center gap-3 mb-6">
@@ -299,6 +330,12 @@ const imageMap = {
                   )}
                   <p className="text-sm text-gray-500 mb-2 text-center">{getDescription(item.name)}</p>
                   <span className="text-red-700 font-semibold text-base">₹{item.price}</span>
+                  <button
+                    className="mt-2 px-4 py-1 bg-red-700 text-white rounded-full text-sm font-semibold hover:bg-red-800 transition"
+                    onClick={() => addToCart(item, cat.category)}
+                  >
+                    Add to Cart
+                  </button>
                 </div>
               </div>
             ))}
