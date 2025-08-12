@@ -4,15 +4,18 @@
 
 /* CSS Variables for Design System */
 :root {
-  --color-primary-red: #b91c1c;
-  --color-primary-red-hover: #991b1b;
-  --color-primary-red-light: rgba(185, 28, 28, 0.1);
-  --color-accent-gold: #fbbf24;
-  --color-text-light: #6b7280;
-  --color-text-medium: #444;
-  --color-text-dark: #1f2937;
-  --color-bg-light: #f9fafb;
-  --color-white: #ffffff;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+  --primary-red: #b91c1c;
+  --primary-red-hover: #991b1b;
+  --accent-gold: #fbbf24;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --text-light: #6b7280;
+  --bg-light: #f9fafb;
+  --bg-white: #ffffff;
+  --border-color: #e5e7eb;
 }
 
 /* Custom Tailwind utility for accent gold */

@@ -119,74 +119,82 @@ export default function MenuPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">Our Menu</h1>
-          <p className="text-lg text-gray-600">Discover our delicious selection of dishes</p>
+    <div className="min-h-screen bg-bg-light">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl sm:text-5xl font-bold text-text-primary mb-4">Our Menu</h1>
+          <p className="text-lg text-text-secondary max-w-2xl mx-auto">Discover our delicious selection of dishes, crafted with the freshest ingredients.</p>
         </div>
 
-        <FilterBar
-          selectedCategory={selectedCategory}
-          categories={categories}
-          onCategoryChange={setSelectedCategory}
-          selectedTags={selectedTags}
-          availableTags={availableTags}
-          onTagToggle={(tag) => {
-            setSelectedTags(prev => 
-              prev.includes(tag) 
-                ? prev.filter(t => t !== tag)
-                : [...prev, tag]
-            );
-          }}
-          dietFilter={dietFilter}
-          onDietFilterChange={setDietFilter}
-        />
-
-        {getTotalCartItems() > 0 && (
-          <div className="fixed bottom-6 right-6 z-50">
-            <button
-              onClick={() => setShowCartModal(true)}
-              className="bg-green-500 text-white px-6 py-3 rounded-full shadow-lg hover:bg-green-600 transition-colors duration-200 flex items-center space-x-2"
-            >
-              <span>View Cart ({getTotalCartItems()})</span>
-              <span className="font-bold">₹{getTotalPrice()}</span>
-            </button>
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          <div className="lg:col-span-1 self-start sticky top-28">
+            <FilterBar
+              selectedCategory={selectedCategory}
+              categories={categories}
+              onCategoryChange={setSelectedCategory}
+              selectedTags={selectedTags}
+              availableTags={availableTags}
+              onTagToggle={(tag) => {
+                setSelectedTags(prev => 
+                  prev.includes(tag) 
+                    ? prev.filter(t => t !== tag)
+                    : [...prev, tag]
+                );
+              }}
+              dietFilter={dietFilter}
+              onDietFilterChange={setDietFilter}
+            />
           </div>
-        )}
 
-        <div className="space-y-12">
-          {filteredData.map((section) => (
-            <div key={section.category}>
-              <MenuCategoryHeader 
-                category={section}
-                itemCount={section.items.length}
-              />
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {section.items.map((item) => {
-                  const compatibleAddons = getCompatibleAddons(item, addons);
-                  return (
-                    <MenuItemCard
-                      key={item.name}
-                      item={item}
-                      cart={cart}
-                      onAddToCart={addToCart}
-                      onShowAddons={compatibleAddons.length > 0 ? showAddons : undefined}
-                      compatibleAddons={compatibleAddons}
-                    />
-                  );
-                })}
+          <div className="lg:col-span-3">
+            {getTotalCartItems() > 0 && (
+              <div className="fixed bottom-6 right-6 z-50">
+                <button
+                  onClick={() => setShowCartModal(true)}
+                  className="bg-primary-red text-white px-6 py-3 rounded-full shadow-lg hover:bg-primary-red-hover transition-transform transform hover:scale-105 duration-300 flex items-center space-x-3"
+                  aria-label={`View cart with ${getTotalCartItems()} items`}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                  <span className="font-bold">{getTotalCartItems()} items | ₹{getTotalPrice()}</span>
+                </button>
               </div>
-            </div>
-          ))}
-        </div>
+            )}
 
-        {filteredData.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-xl text-gray-500">No items found matching your filters.</p>
+            <div className="space-y-16">
+              {filteredData.map((section) => (
+                <div key={section.category}>
+                  <MenuCategoryHeader 
+                    category={section}
+                    itemCount={section.items.length}
+                  />
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                    {section.items.map((item) => {
+                      const compatibleAddons = getCompatibleAddons(item, addons);
+                      return (
+                        <MenuItemCard
+                          key={item.name}
+                          item={item}
+                          cart={cart}
+                          onAddToCart={addToCart}
+                          onShowAddons={compatibleAddons.length > 0 ? showAddons : undefined}
+                          compatibleAddons={compatibleAddons}
+                        />
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {filteredData.length === 0 && (
+              <div className="text-center py-16">
+                <p className="text-2xl text-text-light">No items found matching your filters.</p>
+                <p className="mt-2 text-text-secondary">Try adjusting your search.</p>
+              </div>
+            )}
           </div>
-        )}
+        </div>
 
         <CartModal
           isOpen={showCartModal}

@@ -8,14 +8,25 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary-red': '#b91c1c',
-        'primary-red-hover': '#991b1b',
-        'primary-red-light': '#f7dada',
-        'text-dark': '#1f2937',
-        'text-medium': '#444',
-        'text-light': '#6b7280',
-        'background-light': '#f7f7f7',
-        'gold': '#fbbf24',
+        primary: {
+          red: 'var(--primary-red)',
+          'red-hover': 'var(--primary-red-hover)',
+        },
+        accent: {
+          gold: 'var(--accent-gold)',
+        },
+        text: {
+          primary: 'var(--text-primary)',
+          secondary: 'var(--text-secondary)',
+          light: 'var(--text-light)',
+        },
+        bg: {
+          light: 'var(--bg-light)',
+          white: 'var(--bg-white)',
+        },
+        border: {
+          DEFAULT: 'var(--border-color)',
+        },
       },
     },
   },

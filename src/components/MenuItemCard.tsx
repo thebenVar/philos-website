@@ -42,27 +42,27 @@ export default function MenuItemCard({
   const currentQuantity = getCartItemQuantity(item.name);
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-      <div className="p-6">
-        <div className="flex justify-between items-start mb-3">
-          <h3 className="text-lg font-semibold text-gray-800 leading-tight">{item.name}</h3>
-          <div className="flex items-center space-x-2">
+    <div className="bg-bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
+      <div className="p-6 flex-grow">
+        <div className="flex justify-between items-start mb-4">
+          <h3 className="text-lg font-semibold text-text-primary leading-tight pr-4">{item.name}</h3>
+          <div className="flex items-center space-x-2 flex-shrink-0">
             {isVeg(item.name) && (
-              <span className="inline-block w-3 h-3 bg-green-500 rounded-full" title="Vegetarian"></span>
+              <span className="inline-block w-4 h-4 bg-green-500 rounded-full border-2 border-white" title="Vegetarian"></span>
             )}
-            <span className="text-xl font-bold text-green-600">₹{item.price}</span>
+            <span className="text-xl font-bold text-primary-red">₹{item.price}</span>
           </div>
         </div>
 
         {item.tags && item.tags.length > 0 && (
-          <div className="mb-3">
+          <div className="mb-4 flex flex-wrap gap-2">
             {item.tags.map((tag, index) => (
               <span 
                 key={index} 
-                className={`inline-block px-2 py-1 text-xs font-medium rounded-full mr-2 mb-1 ${
+                className={`inline-block px-3 py-1 text-xs font-semibold rounded-full ${
                   tag === 'Best Selling' ? 'bg-yellow-100 text-yellow-800' :
                   tag === 'New Addition' ? 'bg-blue-100 text-blue-800' :
-                  tag === 'Premium' ? 'bg-purple-100 text-purple-800' :
+                  tag === 'Premium' ? 'bg-accent-gold text-text-primary' :
                   tag === 'Discount Available' ? 'bg-red-100 text-red-800' :
                   'bg-gray-100 text-gray-800'
                 }`}
@@ -72,44 +72,48 @@ export default function MenuItemCard({
             ))}
           </div>
         )}
+      </div>
 
+      <div className="p-6 bg-bg-light mt-auto">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="flex items-center border border-gray-300 rounded-md">
+          <div className="flex items-center">
+            <div className="flex items-center border border-border rounded-md">
               <button
                 onClick={() => handleQuantityChange(Math.max(0, currentQuantity - 1))}
-                className="px-3 py-1 text-gray-600 hover:bg-gray-100 transition-colors duration-200"
+                className="px-3 py-1 text-text-secondary hover:bg-gray-100 transition-colors duration-200 rounded-l-md"
                 disabled={currentQuantity === 0}
+                aria-label="Decrease quantity"
               >
                 -
               </button>
-              <span className="px-3 py-1 min-w-[3rem] text-center border-l border-r border-gray-300">
+              <span className="px-4 py-1 min-w-[3rem] text-center border-l border-r border-border font-semibold text-text-primary">
                 {currentQuantity}
               </span>
               <button
                 onClick={() => handleQuantityChange(currentQuantity + 1)}
-                className="px-3 py-1 text-gray-600 hover:bg-gray-100 transition-colors duration-200"
+                className="px-3 py-1 text-text-secondary hover:bg-gray-100 transition-colors duration-200 rounded-r-md"
+                aria-label="Increase quantity"
               >
                 +
               </button>
             </div>
-
-            {currentQuantity > 0 && (
-              <span className="text-sm text-green-600 font-medium">
-                Added to cart!
-              </span>
-            )}
           </div>
 
           {compatibleAddons.length > 0 && currentQuantity > 0 && onShowAddons && (
             <button
               onClick={() => onShowAddons(item)}
-              className="px-4 py-2 bg-orange-500 text-white text-sm font-medium rounded-md hover:bg-orange-600 transition-colors duration-200"
+              className="px-4 py-2 bg-accent-gold text-text-primary text-sm font-semibold rounded-md hover:bg-yellow-400 transition-colors duration-200"
+              aria-label="Add extras to your item"
             >
-              Add Extras
+              Extras
             </button>
           )}
         </div>
+        {currentQuantity > 0 && (
+          <p className="text-sm text-green-600 font-medium mt-3 text-center">
+            Added to cart!
+          </p>
+        )}
       </div>
     </div>
   );
