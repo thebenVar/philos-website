@@ -103,3 +103,37 @@ export const getDishImageForName = (name: string): string | null => {
   }
   return null;
 };
+
+// Category-aware base image resolver for non-pizza items
+export const getBaseImageForItem = (name: string, category?: string): string | null => {
+  const raw = name || '';
+  const key = normalize(raw);
+
+  // Known specific items -> exact images
+  const specific: Record<string, string> = {
+    spicycrunchytunaroll: '/gallery/spicy_crunchy_tuna_roll.png',
+    passionfruitspritzer: '/gallery/passionfruit_spritzer.png',
+    potatowedges: '/gallery/potato_wedges.png',
+    teriyakislicedbeeftenderloin: '/gallery/teriyaki.png',
+  };
+  if (specific[key]) return specific[key];
+
+  // Pizzas delegate to pizza matcher
+  if (/pizza/i.test(raw) || /\((8|10|12)\s*inch\)/i.test(raw)) {
+    return getDishImageForName(raw);
+  }
+
+  // Category-level defaults
+  switch (category) {
+    case 'BEVERAGES':
+      return key.includes('passionfruit') ? '/gallery/passionfruit_spritzer.png' : '/gallery/beverage_bar.png';
+    case 'Authentic Japanese Sushi':
+      return '/dishes/sushi.png';
+    case 'Sides':
+      return '/gallery/potato_wedges.png';
+    case 'Asian':
+      return '/gallery/teriyaki.png';
+    default:
+      return null;
+  }
+};
