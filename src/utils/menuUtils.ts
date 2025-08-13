@@ -50,3 +50,31 @@ export const getAllTags = (menuData: Array<{ category: string; items: MenuItem[]
 
   return Object.entries(tagCounts).map(([tag, count]) => ({ tag, count }));
 };
+
+// --- Image auto-matching helpers ---
+const normalize = (s: string): string => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
+
+// Try to resolve a dish image from item name heuristically based on available files in public/dishes
+export const getDishImageForName = (name: string): string | null => {
+  const key = normalize(name);
+  const rules: Array<{ pattern: RegExp; file: string }> = [
+    { pattern: /(bbq|barbe?cue|barbq)/, file: 'bbq.jpg' },
+    { pattern: /bolognese|bolon?g?e?n?se/, file: 'bolognese.jpg' },
+    { pattern: /(chef|chefs).*?(special|spl)/, file: 'chefspl.jpg' },
+    { pattern: /classic.*pork/, file: 'classicpork.jpg' },
+    { pattern: /diavola/, file: 'diavola.jpg' },
+    { pattern: /gamber(e|a)tt?i|gamberetti|gamberatti/, file: 'gamberatti.jpg' },
+    { pattern: /formaggi|quattroformaggi/, file: 'formaggi.jpg' },
+    { pattern: /jamaic(an)?|jerk/, file: 'jamaican.jpg' },
+    { pattern: /leban(e|i)se/, file: 'lebanise.jpg' },
+    { pattern: /margh(a|e)rita|margarita/, file: 'margharita.jpg' },
+    { pattern: /meat.*lover/, file: 'meatlovers.jpg' },
+    { pattern: /paneer|paneertikka|grilledpaneer/, file: 'paneertikka.jpg' },
+    { pattern: /pepperoni/, file: 'pepperoni.jpg' },
+  ];
+
+  for (const r of rules) {
+    if (r.pattern.test(key)) return `/dishes/${r.file}`;
+  }
+  return null;
+};

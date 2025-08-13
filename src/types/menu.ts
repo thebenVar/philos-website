@@ -8,6 +8,7 @@ export interface MenuItem {
     side: string;
     addon: string;
   };
+  image?: string | null; // Optional image field for per-item images
 }
 
 export interface MenuCategory {

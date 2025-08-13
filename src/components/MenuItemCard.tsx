@@ -1,5 +1,6 @@
 import React from 'react';
 import { MenuItem, CartItem } from '../types/menu';
+import { getDishImageForName } from '../utils/menuUtils';
 
 interface MenuItemCardProps {
   item: MenuItem;
@@ -41,8 +42,36 @@ export default function MenuItemCard({
 
   const currentQuantity = getCartItemQuantity(item.name);
 
+  const getImageSrc = (src?: string | null): string => {
+    // If item already provides an explicit image
+    if (src && src.trim()) {
+      if (src.startsWith('/') || src.startsWith('http')) return src;
+      return `/dishes/${src}`;
+    }
+    // Try auto resolver based on name
+    const auto = getDishImageForName(item.name);
+    if (auto) return auto;
+    return '/placeholders/menu-item.svg';
+  };
+
   return (
     <div className="bg-bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
+      {/* Image */}
+      <div className="relative w-full aspect-[4/3] bg-gray-100">
+        {/* Using native img to avoid external domain config; works for public/ assets */}
+        <img
+          src={getImageSrc(item.image as any)}
+          alt={item.name}
+          className="absolute inset-0 w-full h-full object-cover"
+          onError={(e) => {
+            const target = e.currentTarget as HTMLImageElement;
+            if (target.src.endsWith('/placeholders/menu-item.svg')) return;
+            target.src = '/placeholders/menu-item.svg';
+          }}
+          loading="lazy"
+        />
+      </div>
+
       <div className="p-6 flex-grow">
         <div className="flex justify-between items-start mb-4">
           <h3 className="text-lg font-semibold text-text-primary leading-tight pr-4">{item.name}</h3>

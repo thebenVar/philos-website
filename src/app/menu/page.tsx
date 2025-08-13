@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { MenuItem, CartItem } from '../../types/menu';
 import { menuData } from '../../data/menuData';
 import { 
@@ -14,6 +14,7 @@ import MenuCategoryHeader from '../../components/MenuCategoryHeader';
 import FilterBar from '../../components/FilterBar';
 import CartModal from '../../components/CartModal';
 import AddonModal from '../../components/AddonModal';
+import PizzaVariantCard from '../../components/PizzaVariantCard';
 
 export default function MenuPage() {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -85,7 +86,23 @@ export default function MenuPage() {
   const categories = getUniqueCategories(menuData);
   const availableTags = getAllTags(menuData);
 
-  const filteredData = menuData.filter(section => {
+  const groupPizzaVariants = (items: MenuItem[]) => {
+    const groups: Record<string, MenuItem[]> = {};
+    const re = /(.*)\s*\((8|10|12)\s*Inch\)/i;
+    items.forEach((it) => {
+      const m = it.name.match(re);
+      if (m) {
+        const base = m[1].trim();
+        groups[base] = groups[base] || [];
+        groups[base].push(it);
+      }
+    });
+    return groups;
+  };
+
+  const isPizzaCategory = (cat: string) => cat === 'Veg Pizzas' || cat === 'Non Veg Pizzas';
+
+  const filteredData = useMemo(() => menuData.filter(section => {
     if (section.category === 'Add ons') return false;
     if (selectedCategory === 'All') return true;
     return section.category === selectedCategory;
@@ -104,7 +121,7 @@ export default function MenuPage() {
       
       return true;
     })
-  })).filter(section => section.items.length > 0);
+  })).filter(section => section.items.length > 0), [menuData, selectedCategory, selectedTags, dietFilter]);
 
   const getTotalCartItems = (): number => {
     return cart.reduce((total, item) => total + item.quantity, 0);
@@ -169,19 +186,35 @@ export default function MenuPage() {
                   />
                   
                   <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-                    {section.items.map((item) => {
-                      const compatibleAddons = getCompatibleAddons(item, addons);
-                      return (
-                        <MenuItemCard
-                          key={item.name}
-                          item={item}
+                    {isPizzaCategory(section.category) ? (
+                      // Render grouped variant cards
+                      Object.entries(groupPizzaVariants(section.items)).map(([base, variants]) => (
+                        <PizzaVariantCard
+                          key={base}
+                          baseName={base}
+                          variants={variants}
                           cart={cart}
                           onAddToCart={addToCart}
-                          onShowAddons={compatibleAddons.length > 0 ? showAddons : undefined}
-                          compatibleAddons={compatibleAddons}
+                          onShowAddons={showAddons}
+                          addons={addons}
                         />
-                      );
-                    })}
+                      ))
+                    ) : (
+                      // Fallback to non-pizza regular cards
+                      section.items.map((item) => {
+                        const compatibleAddons = getCompatibleAddons(item, addons);
+                        return (
+                          <MenuItemCard
+                            key={item.name}
+                            item={item}
+                            cart={cart}
+                            onAddToCart={addToCart}
+                            onShowAddons={compatibleAddons.length > 0 ? showAddons : undefined}
+                            compatibleAddons={compatibleAddons}
+                          />
+                        );
+                      })
+                    )}
                   </div>
                 </div>
               ))}
