@@ -54,6 +54,25 @@ export const getAllTags = (menuData: Array<{ category: string; items: MenuItem[]
 // --- Image auto-matching helpers ---
 const normalize = (s: string): string => s.toLowerCase().replace(/[^a-z0-9]+/g, '');
 
+// Map a base image path like '/dishes/foo.jpg' to a derivative WebP path '/dishes/thumb/foo.webp' or '/dishes/large/foo.webp'
+export const getImageDerivativePath = (basePath: string, kind: 'thumb' | 'large'): string => {
+  try {
+    if (!basePath || !basePath.startsWith('/')) return basePath;
+    const parts = basePath.split('/'); // ['', 'dishes', 'foo.jpg'] or ['', 'gallery', 'sub', 'bar.png']
+    if (parts.length < 3) return basePath;
+    const root = parts[1];
+    const rest = parts.slice(2);
+    // remove existing size dir if present
+    if (rest[0] === 'thumb' || rest[0] === 'large') rest.shift();
+    const filename = rest.pop() as string;
+    const nameWebp = filename.replace(/\.[a-z0-9]+$/i, '.webp');
+    const subdir = rest.length ? rest.join('/') + '/' : '';
+    return `/${root}/${kind}/${subdir}${nameWebp}`;
+  } catch {
+    return basePath;
+  }
+};
+
 // Try to resolve a dish image from item name heuristically based on available files in public/dishes
 export const getDishImageForName = (name: string): string | null => {
   const raw = name || '';

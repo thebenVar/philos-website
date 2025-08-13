@@ -1,3 +1,27 @@
 node_modules
 .next
 *.py
+
+# Ignore archives and oversized assets
+*.zip
+*.tar
+*.tar.gz
+*.7z
+
+# Ignore raw/original images if you keep them outside public
+raw-images/
+
+# If you keep originals under public, ignore them, keep only processed outputs
+public/dishes/*.jpg
+public/dishes/*.jpeg
+public/dishes/*.png
+public/dishes/*.avif
+!public/dishes/thumb/
+!public/dishes/large/
+
+public/gallery/*.jpg
+public/gallery/*.jpeg
+public/gallery/*.png
+public/gallery/*.avif
+!public/gallery/thumb/
+!public/gallery/large/

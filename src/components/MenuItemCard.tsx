@@ -1,6 +1,6 @@
 import React from 'react';
 import { MenuItem, CartItem } from '../types/menu';
-import { getDishImageForName } from '../utils/menuUtils';
+import { getDishImageForName, getImageDerivativePath } from '../utils/menuUtils';
 
 interface MenuItemCardProps {
   item: MenuItem;
@@ -43,14 +43,16 @@ export default function MenuItemCard({
   const currentQuantity = getCartItemQuantity(item.name);
 
   const getImageSrc = (src?: string | null): string => {
-    // If item already provides an explicit image
+    // Explicit image
+    let basePath: string | null = null;
     if (src && src.trim()) {
-      if (src.startsWith('/') || src.startsWith('http')) return src;
-      return `/dishes/${src}`;
+      basePath = src.startsWith('/') || src.startsWith('http') ? src : `/dishes/${src}`;
+    } else {
+      basePath = getDishImageForName(item.name);
     }
-    // Try auto resolver based on name
-    const auto = getDishImageForName(item.name);
-    if (auto) return auto;
+    if (basePath) {
+      return getImageDerivativePath(basePath, 'thumb');
+    }
     return '/placeholders/menu-item.svg';
   };
 

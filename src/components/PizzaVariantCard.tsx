@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from 'react';
 import { CartItem, MenuItem } from '../types/menu';
-import { isVegetarian, getCompatibleAddons, getDishImageForName } from '../utils/menuUtils';
+import { isVegetarian, getCompatibleAddons, getDishImageForName, getImageDerivativePath } from '../utils/menuUtils';
 
 export interface PizzaVariantCardProps {
   baseName: string;
@@ -21,13 +21,13 @@ function parseSize(name: string): string | null {
 function resolveImage(src?: string | null, fallbackName?: string | null): string {
   // If explicit src provided, honor it
   if (src && src.trim()) {
-    if (src.startsWith('/') || src.startsWith('http')) return src;
-    return `/dishes/${src}`;
+    const base = src.startsWith('/') || src.startsWith('http') ? src : `/dishes/${src}`;
+    return getImageDerivativePath(base, 'thumb');
   }
   // Try auto-match based on name
   if (fallbackName) {
-    const auto = getDishImageForName(fallbackName);
-    if (auto) return auto;
+    const autoBase = getDishImageForName(fallbackName);
+    if (autoBase) return getImageDerivativePath(autoBase, 'thumb');
   }
   // Pizza-only category fallback image before generic placeholder
   if (fallbackName && /pizza/i.test(fallbackName)) {
