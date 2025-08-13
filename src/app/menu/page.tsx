@@ -211,6 +211,7 @@ export default function MenuPage() {
                             onAddToCart={addToCart}
                             onShowAddons={compatibleAddons.length > 0 ? showAddons : undefined}
                             compatibleAddons={compatibleAddons}
+                            category={section.category}
                           />
                         );
                       })

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MenuItem, CartItem } from '../types/menu';
-import { getDishImageForName, getImageDerivativePath } from '../utils/menuUtils';
+import { getBaseImageForItem, getImageDerivativePath } from '../utils/menuUtils';
 
 interface MenuItemCardProps {
   item: MenuItem;
@@ -8,6 +8,7 @@ interface MenuItemCardProps {
   onAddToCart: (item: MenuItem, quantity: number) => void;
   onShowAddons?: (item: MenuItem) => void;
   compatibleAddons?: MenuItem[];
+  category?: string;
 }
 
 export default function MenuItemCard({ 
@@ -15,7 +16,8 @@ export default function MenuItemCard({
   cart, 
   onAddToCart, 
   onShowAddons, 
-  compatibleAddons = [] 
+  compatibleAddons = [],
+  category
 }: MenuItemCardProps) {
   const isVeg = (itemName: string): boolean => {
     const vegItems = [
@@ -43,12 +45,12 @@ export default function MenuItemCard({
   const currentQuantity = getCartItemQuantity(item.name);
 
   const getImageSrc = (src?: string | null): string => {
-    // Explicit image
+    // Prefer explicit image set on the item
     let basePath: string | null = null;
     if (src && src.trim()) {
       basePath = src.startsWith('/') || src.startsWith('http') ? src : `/dishes/${src}`;
     } else {
-      basePath = getDishImageForName(item.name);
+      basePath = getBaseImageForItem(item.name, category);
     }
     if (basePath) {
       return getImageDerivativePath(basePath, 'thumb');
@@ -62,7 +64,7 @@ export default function MenuItemCard({
       <div className="relative w-full aspect-[4/3] bg-gray-100">
         {/* Using native img to avoid external domain config; works for public/ assets */}
         <img
-          src={getImageSrc(item.image as any)}
+          src={getImageSrc((item as any).image)}
           alt={item.name}
           className="absolute inset-0 w-full h-full object-cover"
           onError={(e) => {
