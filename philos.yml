@@ -64,36 +64,16 @@ dependencies:
   - autoprefixer: For CSS vendor prefixes
 
 recent_changes:
-  session_date: "August 6, 2025"
+  session_date: "August 14, 2025"
   implemented:
-    - Added Google Maps customer reviews section to homepage
-    - Fetched real reviews from Catherine Chacko, Rahul Raj, and Sohail Zakir
-    - Implemented star rating display system
-    - Set up Tailwind CSS v3.4 (downgraded from v4 for stability)
-    - Configured PostCSS and Autoprefixer
-    - Created CSS variables design system with primary red theme
-    - Updated all components to use modern styling approach
-    - Fixed CSS compilation and rendering issues
-    - Complete menu page refactoring: modular components, TypeScript integration, 48% code reduction (see CODE_QUALITY_ANALYSIS.md)
-  
-  styling_approach:
-    - Primary: Tailwind CSS v3.4 utility classes
-    - Secondary: CSS variables for custom colors (:root)
-    - Fallback: Inline styles for critical styling
-    - Component classes: Custom CSS classes for reusable components
-  
-  color_scheme:
-    primary_red: "#b91c1c"
-    primary_red_hover: "#991b1b" 
-    accent_gold: "#fbbf24"
-    text_colors: ["#1f2937", "#444", "#6b7280"]
-  
-  issues_resolved:
-    - Tailwind CSS v4 compatibility problems with @apply directive
-    - PostCSS configuration for proper CSS processing
-    - Custom color class recognition
-    - Development server memory allocation errors
-    - CSS file corruption and recreation
+    - Menu cards now display images with a placeholder fallback; added optional MenuItem.image.
+    - Consolidated pizza sizes into a single card with a size selector (PizzaVariantCard) and grouping logic in the menu page.
+    - Auto image matching with pizza-only constraints; added category-aware fallbacks; fixed non-pizza items showing pizza images.
+    - Category banners now auto-infer when mapping is missing (uses item.image/name first, then default banner).
+    - Image processing pipeline using Sharp to generate WebP derivatives (thumb 512x512, large 2046x2046); added npm scripts: images:build, images:clean.
+    - Menu list uses generated thumbnails by default; detail view will use large derivatives.
+    - Updated .gitignore to ignore archives and original image formats; keep only processed outputs (thumb/large).
+    - Added placeholder asset at public/placeholders/menu-item.svg.
 
 notes:
 
