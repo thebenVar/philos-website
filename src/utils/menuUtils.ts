@@ -56,24 +56,30 @@ const normalize = (s: string): string => s.toLowerCase().replace(/[^a-z0-9]+/g, 
 
 // Try to resolve a dish image from item name heuristically based on available files in public/dishes
 export const getDishImageForName = (name: string): string | null => {
-  const key = normalize(name);
-  const rules: Array<{ pattern: RegExp; file: string }> = [
-    { pattern: /(bbq|barbe?cue|barbq)/, file: 'bbq.jpg' },
-    { pattern: /bolognese|bolon?g?e?n?se/, file: 'bolognese.jpg' },
-    { pattern: /(chef|chefs).*?(special|spl)/, file: 'chefspl.jpg' },
-    { pattern: /classic.*pork/, file: 'classicpork.jpg' },
-    { pattern: /diavola/, file: 'diavola.jpg' },
-    { pattern: /gamber(e|a)tt?i|gamberetti|gamberatti/, file: 'gamberatti.jpg' },
-    { pattern: /formaggi|quattroformaggi/, file: 'formaggi.jpg' },
-    { pattern: /jamaic(an)?|jerk/, file: 'jamaican.jpg' },
-    { pattern: /leban(e|i)se/, file: 'lebanise.jpg' },
-    { pattern: /margh(a|e)rita|margarita/, file: 'margharita.jpg' },
-    { pattern: /meat.*lover/, file: 'meatlovers.jpg' },
-    { pattern: /paneer|paneertikka|grilledpaneer/, file: 'paneertikka.jpg' },
-    { pattern: /pepperoni/, file: 'pepperoni.jpg' },
+  const raw = name || '';
+  const key = normalize(raw);
+  const isPizza = /pizza/i.test(raw) || /\((8|10|12)\s*inch\)/i.test(raw);
+
+  type Rule = { pattern: RegExp; file: string; pizzaOnly?: boolean };
+  const rules: Rule[] = [
+    // Pizza-focused mappings (restricted)
+    { pattern: /(bbq|barbe?cue|barbq)/, file: 'bbq.jpg', pizzaOnly: true },
+    { pattern: /bolognese|bolon?g?e?n?se/, file: 'bolognese.jpg', pizzaOnly: true },
+    { pattern: /(chef|chefs).*?(special|spl)/, file: 'chefspl.jpg', pizzaOnly: true },
+    { pattern: /classic.*pork/, file: 'classicpork.jpg', pizzaOnly: true },
+    { pattern: /diavola/, file: 'diavola.jpg', pizzaOnly: true },
+    { pattern: /gamber(e|a)tt?i|gamberetti|gamberatti/, file: 'gamberatti.jpg', pizzaOnly: true },
+    { pattern: /formaggi|quattroformaggi/, file: 'formaggi.jpg', pizzaOnly: true },
+    { pattern: /jamaic(an)?|jerk/, file: 'jamaican.jpg', pizzaOnly: true },
+    { pattern: /leban(e|i)se/, file: 'lebanise.jpg', pizzaOnly: true },
+    { pattern: /margh(a|e)rita|margarita/, file: 'margharita.jpg', pizzaOnly: true },
+    { pattern: /meat.*lover/, file: 'meatlovers.jpg', pizzaOnly: true },
+    { pattern: /paneer|paneertikka|grilledpaneer/, file: 'paneertikka.jpg', pizzaOnly: true },
+    { pattern: /pepperoni/, file: 'pepperoni.jpg', pizzaOnly: true },
   ];
 
   for (const r of rules) {
+    if (r.pizzaOnly && !isPizza) continue;
     if (r.pattern.test(key)) return `/dishes/${r.file}`;
   }
   return null;

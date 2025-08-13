@@ -19,7 +19,7 @@ export const menuData: MenuData = [
     { name: "Chicken Karaage", price: 360 },
     { name: "Dynamite Crispy Shrimp", price: 380 },
     { name: "Prawn Tempura", price: 380 },
-    { name: "Teriyaki Sliced Beef Tenderloin", price: 360 },
+    { name: "Teriyaki Sliced Beef Tenderloin", image: "/gallery/teriyaki.png", price: 360 },
     { name: "Thai Chicken Satay", price: 360 },
     { name: "Thai Paneer Satay", price: 310 },
   ]},
@@ -160,7 +160,7 @@ export const menuData: MenuData = [
 ];
 
 export const imageMap: Record<string, string> = {
-  "Asian": "/gallery/teriyaki_sliced_beef_tenderloin.png",
+  "Asian": "/gallery/teriyaki.png",
   "Authentic Japanese Sushi": "/gallery/spicy_crunchy_tuna_roll.png",
   "BEVERAGES": "/gallery/beverage_bar.png",
   "Mains": "/gallery/restaurant.png",
