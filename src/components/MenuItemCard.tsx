@@ -9,6 +9,7 @@ interface MenuItemCardProps {
   onShowAddons?: (item: MenuItem) => void;
   compatibleAddons?: MenuItem[];
   category?: string;
+  onShowDetails?: (item: MenuItem, category?: string) => void; // NEW
 }
 
 export default function MenuItemCard({ 
@@ -17,7 +18,8 @@ export default function MenuItemCard({
   onAddToCart, 
   onShowAddons, 
   compatibleAddons = [],
-  category
+  category,
+  onShowDetails
 }: MenuItemCardProps) {
   const isVeg = (itemName: string): boolean => {
     const vegItems = [
@@ -58,10 +60,14 @@ export default function MenuItemCard({
     return '/placeholders/menu-item.svg';
   };
 
+  const imageWrapperClasses = `relative w-full aspect-[4/3] ${onShowDetails ? 'cursor-pointer' : ''} bg-gray-100`;
+  const titleProps = onShowDetails ? { role: 'button' as const, tabIndex: 0, onClick: () => onShowDetails(item, category), className: 'text-lg font-semibold text-text-primary leading-tight pr-4 cursor-pointer' } : { className: 'text-lg font-semibold text-text-primary leading-tight pr-4' };
+  const handleImageClick = () => onShowDetails && onShowDetails(item, category);
+
   return (
-    <div className="bg-bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
+    <div className="bg-bg-white rounded-xl shadow-md border border-border/60 overflow-hidden hover:shadow-2xl hover:-translate-y-0.5 transition duration-300 flex flex-col h-full">
       {/* Image */}
-      <div className="relative w-full aspect-[4/3] bg-gray-100">
+      <div className={imageWrapperClasses} onClick={handleImageClick} role={onShowDetails ? 'button' : undefined}>
         {/* Using native img to avoid external domain config; works for public/ assets */}
         <img
           src={getImageSrc((item as any).image)}
@@ -78,7 +84,7 @@ export default function MenuItemCard({
 
       <div className="p-6 flex-grow">
         <div className="flex justify-between items-start mb-4">
-          <h3 className="text-lg font-semibold text-text-primary leading-tight pr-4">{item.name}</h3>
+          <h3 {...titleProps}>{item.name}</h3>
           <div className="flex items-center space-x-2 flex-shrink-0">
             {isVeg(item.name) && (
               <span className="inline-block w-4 h-4 bg-green-500 rounded-full border-2 border-white" title="Vegetarian"></span>
@@ -108,7 +114,7 @@ export default function MenuItemCard({
       </div>
 
       <div className="p-6 bg-bg-light mt-auto">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-3">
           <div className="flex items-center">
             <div className="flex items-center border border-border rounded-md">
               <button
@@ -132,15 +138,26 @@ export default function MenuItemCard({
             </div>
           </div>
 
-          {compatibleAddons.length > 0 && currentQuantity > 0 && onShowAddons && (
-            <button
-              onClick={() => onShowAddons(item)}
-              className="px-4 py-2 bg-accent-gold text-text-primary text-sm font-semibold rounded-md hover:bg-yellow-400 transition-colors duration-200"
-              aria-label="Add extras to your item"
-            >
-              Extras
-            </button>
-          )}
+          <div className="flex items-center gap-2">
+            {onShowDetails && (
+              <button
+                onClick={() => onShowDetails(item, category)}
+                className="px-4 py-2 border border-border text-text-primary text-sm font-semibold rounded-md hover:bg-gray-100 transition-colors duration-200"
+                aria-label={`View details for ${item.name}`}
+              >
+                View details
+              </button>
+            )}
+            {compatibleAddons.length > 0 && currentQuantity > 0 && onShowAddons && (
+              <button
+                onClick={() => onShowAddons(item)}
+                className="px-4 py-2 bg-accent-gold text-text-primary text-sm font-semibold rounded-md hover:bg-yellow-400 transition-colors duration-200"
+                aria-label="Add extras to your item"
+              >
+                Extras
+              </button>
+            )}
+          </div>
         </div>
         {currentQuantity > 0 && (
           <p className="text-sm text-green-600 font-medium mt-3 text-center">
