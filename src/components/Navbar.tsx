@@ -21,7 +21,7 @@ export default function Navbar() {
             height={60} 
           />
           <span className="font-bold text-2xl text-primary-red tracking-wide ml-3">
-            Philo's Delicacy
+            Philo&apos;s Delicacy
           </span>
         </Link>
         <ul className="flex gap-8 list-none m-0 p-0 flex-1 justify-end items-center">

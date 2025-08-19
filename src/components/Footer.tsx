@@ -9,8 +9,8 @@ export default function Footer() {
         {/* Logo & Description */}
         <div className="flex flex-col items-start gap-4">
           <Link href="/" className="flex items-center mb-2">
-            <Image src="/logo.png" alt="Philo's Delicacy Logo" width={48} height={48} />
-            <span className="ml-3 font-bold text-xl tracking-wide">Philo's Delicacy</span>
+            <Image src="/logo.png" alt={'Philo\'s Delicacy Logo'} width={48} height={48} />
+            <span className="ml-3 font-bold text-xl tracking-wide">Philo&apos;s Delicacy</span>
           </Link>
           <p className="text-sm text-gray-300 max-w-xs">
             A culinary journey from authentic Italian pizzas to exquisite global flavors.
@@ -73,7 +73,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center mt-6 text-sm text-gray-400 gap-2">
-        <span>© 2025 Philo's Delicacy. All rights reserved. Savor the Uniqueness.</span>
+  <span>© 2025 Philo&apos;s Delicacy. All rights reserved. Savor the Uniqueness.</span>
         <span className="flex items-center gap-2 mt-2 md:mt-0">
           <span className="inline-flex items-center h-8 px-3 rounded-full" style={{ background: '#e0e7ef' }}>
             <img src="/fssai.png" alt="FSSAI Logo" className="h-6 w-6 object-contain mr-2" />

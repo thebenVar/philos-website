@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { MenuItem, CartItem } from '../../types/menu';
-import { menuData } from '../../data/menuData';
+import { menuData as fileMenuData } from '../../data/menuData';
 import { 
   isVegetarian, 
   getCompatibleAddons, 
@@ -25,7 +25,25 @@ export default function MenuPage() {
   const [dietFilter, setDietFilter] = useState<string>('All');
   const [showCartModal, setShowCartModal] = useState<boolean>(false);
 
+  const [menuData, setMenuData] = useState(fileMenuData);
   const addons = menuData.find(section => section.category === 'Add ons')?.items || [];
+
+  // Fetch from API if available
+  useEffect(() => {
+    let active = true;
+    const load = async () => {
+      try {
+        const res = await fetch('/api/menu', { cache: 'no-store' });
+        if (!res.ok) throw new Error('bad');
+        const json = await res.json();
+        if (json?.data && Array.isArray(json.data) && active) setMenuData(json.data);
+      } catch {
+        // keep file fallback
+      }
+    };
+    load();
+    return () => { active = false; };
+  }, []);
 
   const addToCart = (item: MenuItem, quantity: number = 1, itemAddons: MenuItem[] = []) => {
     setCart(prevCart => {

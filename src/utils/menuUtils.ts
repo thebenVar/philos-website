@@ -137,3 +137,14 @@ export const getBaseImageForItem = (name: string, category?: string): string | n
       return null;
   }
 };
+
+// Slug helper for URLs and identifiers
+export const slugify = (input: string): string => {
+  return (input || '')
+    .toLowerCase()
+    .normalize('NFKD')
+    .replace(/[\u0300-\u036f]/g, '') // remove diacritics
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/-{2,}/g, '-')
+    .replace(/^-+|-+$/g, '');
+};
