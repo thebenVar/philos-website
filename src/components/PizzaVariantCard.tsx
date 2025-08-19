@@ -136,7 +136,7 @@ export default function PizzaVariantCard({ baseName, variants, cart, onAddToCart
       </div>
 
       <div className="p-6 bg-bg-light mt-auto">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between gap-2">
           <div className="flex items-center">
             <div className="flex items-center border border-border rounded-md">
               <button
@@ -159,16 +159,26 @@ export default function PizzaVariantCard({ baseName, variants, cart, onAddToCart
               </button>
             </div>
           </div>
-
-          {compatibleAddons.length > 0 && currentQuantity > 0 && onShowAddons && (
-            <button
-              onClick={() => onShowAddons(selected)}
-              className="px-4 py-2 bg-accent-gold text-text-primary text-sm font-semibold rounded-md hover:bg-yellow-400 transition-colors duration-200"
-              aria-label="Add extras to your item"
-            >
-              Extras
-            </button>
-          )}
+          <div className="flex items-center gap-2">
+            {currentQuantity === 0 && (
+              <button
+                onClick={() => handleQuantityChange(1)}
+                className="px-4 py-2 bg-primary-red text-white text-sm font-semibold rounded-md hover:bg-primary-red-hover transition-colors duration-200"
+                aria-label={`Add ${selected.name} to cart`}
+              >
+                Add to cart
+              </button>
+            )}
+            {compatibleAddons.length > 0 && currentQuantity > 0 && onShowAddons && (
+              <button
+                onClick={() => onShowAddons(selected)}
+                className="px-4 py-2 bg-accent-gold text-text-primary text-sm font-semibold rounded-md hover:bg-yellow-400 transition-colors duration-200"
+                aria-label="Add extras to your item"
+              >
+                Extras
+              </button>
+            )}
+          </div>
         </div>
         {currentQuantity > 0 && (
           <p className="text-sm text-green-600 font-medium mt-3 text-center">

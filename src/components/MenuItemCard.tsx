@@ -144,6 +144,15 @@ export default function MenuItemCard({
                 View details
               </button>
             )}
+            {currentQuantity === 0 && (
+              <button
+                onClick={() => handleQuantityChange(1)}
+                className="px-4 py-2 bg-primary-red text-white text-sm font-semibold rounded-md hover:bg-primary-red-hover transition-colors duration-200"
+                aria-label={`Add ${item.name} to cart`}
+              >
+                Add to cart
+              </button>
+            )}
             {compatibleAddons.length > 0 && currentQuantity > 0 && onShowAddons && (
               <button
                 onClick={() => onShowAddons(item)}
