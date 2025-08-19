@@ -138,7 +138,7 @@ export default function MenuItemCard({
             {onShowDetails && (
               <button
                 onClick={() => onShowDetails(item, category)}
-                className="px-4 py-2 border border-border text-text-primary text-sm font-semibold rounded-md hover:bg-gray-100 transition-colors duration-200"
+                className="text-primary-red text-sm font-semibold hover:underline"
                 aria-label={`View details for ${item.name}`}
               >
                 View details

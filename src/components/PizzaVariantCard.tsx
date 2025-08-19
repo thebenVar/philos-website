@@ -160,6 +160,15 @@ export default function PizzaVariantCard({ baseName, variants, cart, onAddToCart
             </div>
           </div>
           <div className="flex items-center gap-2">
+            {onShowDetails && (
+              <button
+                onClick={() => onShowDetails(selected, category)}
+                className="text-primary-red text-sm font-semibold hover:underline"
+                aria-label={`View details for ${selected.name}`}
+              >
+                View details
+              </button>
+            )}
             {currentQuantity === 0 && (
               <button
                 onClick={() => handleQuantityChange(1)}
