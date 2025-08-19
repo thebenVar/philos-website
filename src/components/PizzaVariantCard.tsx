@@ -135,64 +135,15 @@ export default function PizzaVariantCard({ baseName, variants, cart, onAddToCart
         )}
       </div>
 
-      <div className="p-6 bg-bg-light mt-auto">
-        <div className="flex items-center justify-between gap-2">
-          <div className="flex items-center">
-            <div className="flex items-center border border-border rounded-md">
-              <button
-                onClick={() => handleQuantityChange(Math.max(0, currentQuantity - 1))}
-                className="px-3 py-1 text-text-secondary hover:bg-gray-100 transition-colors duration-200 rounded-l-md"
-                disabled={currentQuantity === 0}
-                aria-label="Decrease quantity"
-              >
-                -
-              </button>
-              <span className="px-4 py-1 min-w-[3rem] text-center border-l border-r border-border font-semibold text-text-primary">
-                {currentQuantity}
-              </span>
-              <button
-                onClick={() => handleQuantityChange(currentQuantity + 1)}
-                className="px-3 py-1 text-text-secondary hover:bg-gray-100 transition-colors duration-200 rounded-r-md"
-                aria-label="Increase quantity"
-              >
-                +
-              </button>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            {onShowDetails && (
-              <button
-                onClick={() => onShowDetails(selected, category)}
-                className="text-primary-red text-sm font-semibold hover:underline"
-                aria-label={`View details for ${selected.name}`}
-              >
-                View details
-              </button>
-            )}
-            {currentQuantity === 0 && (
-              <button
-                onClick={() => handleQuantityChange(1)}
-                className="px-4 py-2 bg-primary-red text-white text-sm font-semibold rounded-md hover:bg-primary-red-hover transition-colors duration-200"
-                aria-label={`Add ${selected.name} to cart`}
-              >
-                Add to cart
-              </button>
-            )}
-            {compatibleAddons.length > 0 && currentQuantity > 0 && onShowAddons && (
-              <button
-                onClick={() => onShowAddons(selected)}
-                className="px-4 py-2 bg-accent-gold text-text-primary text-sm font-semibold rounded-md hover:bg-yellow-400 transition-colors duration-200"
-                aria-label="Add extras to your item"
-              >
-                Extras
-              </button>
-            )}
-          </div>
-        </div>
-        {currentQuantity > 0 && (
-          <p className="text-sm text-green-600 font-medium mt-3 text-center">
-            Added to cart!
-          </p>
+      <div className="p-4 bg-bg-light mt-auto flex justify-end">
+        {onShowDetails && (
+          <button
+            onClick={() => onShowDetails(selected, category)}
+            className="text-primary-red text-sm font-semibold hover:underline"
+            aria-label={`View details for ${selected.name}`}
+          >
+            View details
+          </button>
         )}
       </div>
     </div>

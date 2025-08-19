@@ -34,18 +34,7 @@ export default function MenuItemCard({
     return vegItems.some(vegItem => itemName.toLowerCase().includes(vegItem));
   };
 
-  const getCartItemQuantity = (itemName: string): number => {
-    const cartItem = cart.find(cartItem => cartItem.name === itemName);
-    return cartItem ? cartItem.quantity : 0;
-  };
-
-  const handleQuantityChange = (newQuantity: number) => {
-    if (newQuantity > 0) {
-      onAddToCart(item, newQuantity);
-    }
-  };
-
-  const currentQuantity = getCartItemQuantity(item.name);
+  // Shopping flow disabled: we don't expose quantities or add-to-cart for now
 
   const getImageSrc = (src?: string | null): string => {
     // Prefer explicit image set on the item
@@ -109,65 +98,15 @@ export default function MenuItemCard({
         )}
       </div>
 
-      <div className="p-6 bg-bg-light mt-auto">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center">
-            <div className="flex items-center border border-border rounded-md">
-              <button
-                onClick={() => handleQuantityChange(Math.max(0, currentQuantity - 1))}
-                className="px-3 py-1 text-text-secondary hover:bg-gray-100 transition-colors duration-200 rounded-l-md"
-                disabled={currentQuantity === 0}
-                aria-label="Decrease quantity"
-              >
-                -
-              </button>
-              <span className="px-4 py-1 min-w-[3rem] text-center border-l border-r border-border font-semibold text-text-primary">
-                {currentQuantity}
-              </span>
-              <button
-                onClick={() => handleQuantityChange(currentQuantity + 1)}
-                className="px-3 py-1 text-text-secondary hover:bg-gray-100 transition-colors duration-200 rounded-r-md"
-                aria-label="Increase quantity"
-              >
-                +
-              </button>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            {onShowDetails && (
-              <button
-                onClick={() => onShowDetails(item, category)}
-                className="text-primary-red text-sm font-semibold hover:underline"
-                aria-label={`View details for ${item.name}`}
-              >
-                View details
-              </button>
-            )}
-            {currentQuantity === 0 && (
-              <button
-                onClick={() => handleQuantityChange(1)}
-                className="px-4 py-2 bg-primary-red text-white text-sm font-semibold rounded-md hover:bg-primary-red-hover transition-colors duration-200"
-                aria-label={`Add ${item.name} to cart`}
-              >
-                Add to cart
-              </button>
-            )}
-            {compatibleAddons.length > 0 && currentQuantity > 0 && onShowAddons && (
-              <button
-                onClick={() => onShowAddons(item)}
-                className="px-4 py-2 bg-accent-gold text-text-primary text-sm font-semibold rounded-md hover:bg-yellow-400 transition-colors duration-200"
-                aria-label="Add extras to your item"
-              >
-                Extras
-              </button>
-            )}
-          </div>
-        </div>
-        {currentQuantity > 0 && (
-          <p className="text-sm text-green-600 font-medium mt-3 text-center">
-            Added to cart!
-          </p>
+      <div className="p-4 bg-bg-light mt-auto flex justify-end">
+        {onShowDetails && (
+          <button
+            onClick={() => onShowDetails(item, category)}
+            className="text-primary-red text-sm font-semibold hover:underline"
+            aria-label={`View details for ${item.name}`}
+          >
+            View details
+          </button>
         )}
       </div>
     </div>

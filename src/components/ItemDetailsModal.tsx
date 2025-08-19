@@ -40,11 +40,7 @@ export default function ItemDetailsModal({ isOpen, item, category, cart, onClose
 	const [qty, setQty] = useState(1);
 	const [selectedVariant, setSelectedVariant] = useState<string | null>(null);
 
-	const currentQty = useMemo(() => {
-		if (!item) return 0;
-		const ci = cart.find(c => c.name === item.name);
-		return ci?.quantity || 0;
-	}, [cart, item]);
+	// Shopping flow disabled
 
 	useEffect(() => {
 		if (!isOpen || !item) return;
@@ -101,16 +97,7 @@ export default function ItemDetailsModal({ isOpen, item, category, cart, onClose
 
 	const baseImage = details?.image || (item as any).image || undefined;
 	const largeSrc = normalizeImage(baseImage, 'large') || '/placeholders/menu-item.svg';
-	const finalPrice = (() => {
-		if (!details?.variants?.length) return item.price;
-		const v = details.variants.find(v => v.label === selectedVariant) || details.variants[0];
-		return v?.price ?? item.price;
-	})();
-
-	const add = () => {
-		const toAdd: MenuItem = { ...item, price: finalPrice };
-		onAddToCart(toAdd, qty);
-	};
+	// Price and add hidden for no direct delivery
 
 	return (
 		<div className="fixed inset-0 z-[70] flex items-center justify-center">
@@ -154,24 +141,7 @@ export default function ItemDetailsModal({ isOpen, item, category, cart, onClose
 							</div>
 						) : null}
 
-						<div className="mt-6 flex items-center justify-between">
-							<div className="flex items-center border border-border rounded-md">
-								<button onClick={() => setQty(q => Math.max(1, q - 1))} className="px-3 py-1 text-text-secondary hover:bg-gray-100 rounded-l-md" aria-label="Decrease quantity">-</button>
-								<span className="px-4 py-1 min-w-[3rem] text-center border-l border-r border-border font-semibold text-text-primary">{qty}</span>
-								<button onClick={() => setQty(q => q + 1)} className="px-3 py-1 text-text-secondary hover:bg-gray-100 rounded-r-md" aria-label="Increase quantity">+</button>
-							</div>
-							<div className="text-right">
-								<div className="text-xl font-bold text-primary-red">₹{finalPrice}</div>
-								{currentQty > 0 && <div className="text-xs text-green-600 mt-1">In cart: {currentQty}</div>}
-							</div>
-						</div>
-
-						<div className="mt-6 flex gap-3">
-							<button onClick={add} className="px-4 py-2 bg-primary-red text-white font-semibold rounded-md hover:bg-primary-red-hover">Add to cart</button>
-							{onShowAddons && (
-								<button onClick={() => onShowAddons(item)} className="px-4 py-2 border border-border text-text-primary font-semibold rounded-md hover:bg-gray-100">Extras</button>
-							)}
-						</div>
+				{/* Cart controls hidden for no direct delivery */}
 					</div>
 				</div>
 			</div>
