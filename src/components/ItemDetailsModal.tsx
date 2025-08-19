@@ -57,16 +57,26 @@ export default function ItemDetailsModal({ isOpen, item, category, cart, onClose
 				if (!res.ok) throw new Error('Failed to load item');
 				const json = await res.json();
 				if (!active) return;
+				// Sort variants by numeric size (e.g., 8", 10", 12") if labels contain numbers
+				const sortVariants = (vars?: Variant[]) => {
+					if (!vars || !vars.length) return vars;
+					const num = (s: string) => {
+						const m = s.match(/(\d+)/);
+						return m ? parseInt(m[1], 10) : Number.MAX_SAFE_INTEGER;
+					};
+					return [...vars].sort((a, b) => num(a.label) - num(b.label));
+				};
+				const sortedVariants: Variant[] | undefined = sortVariants(json?.item?.variants);
 				setDetails({
 					description: json?.item?.description,
 					image: json?.item?.image,
-					variants: json?.item?.variants,
+					variants: sortedVariants,
 					calories: json?.item?.calories,
 					tags: json?.item?.tags,
 					related: json?.item?.related,
 				});
-				// Default to first variant if provided
-				if (json?.item?.variants?.length) setSelectedVariant(json.item.variants[0].label);
+				// Default to smallest (first after sort) if provided
+				if (sortedVariants?.length) setSelectedVariant(sortedVariants[0].label);
 			} catch (e: any) {
 				if (!active) return;
 				setError(e?.message || 'Unable to load');
