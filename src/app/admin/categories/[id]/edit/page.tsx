@@ -10,19 +10,19 @@ async function getBaseUrl() {
   return process.env.NEXT_PUBLIC_BASE_URL || (host ? `${proto}://${host}` : 'http://localhost:3000');
 }
 
-async function getCategory(id: string) {
-  const base = await getBaseUrl();
+async function getCategory(id: string, base: string) {
   const res = await fetch(`${base}/api/admin/categories/${id}`, { cache: 'no-store' });
   if (!res.ok) return null;
   const json = await res.json();
   return json.data || null;
 }
 
-export default async function EditCategoryPage({ params }: { params: { id: string } }) {
+export default async function EditCategoryPage({ params }: { params: Promise<{ id: string }> }) {
   const ok = await requireAdmin();
   if (!ok) return <p>Unauthorized</p>;
   const base = await getBaseUrl();
-  const cat = await getCategory(params.id);
+  const { id } = await params;
+  const cat = await getCategory(id, base);
   if (!cat) return <p className="text-sm text-gray-600">Category not found.</p>;
   return (
     <div>
