@@ -4,12 +4,9 @@ import { menuData } from '../../../../data/menuData';
 
 export const runtime = 'nodejs';
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { slug: string } }
-) {
+export async function GET(req: NextRequest, context: any) {
   try {
-    const slug = params.slug;
+  const slug = context?.params?.slug as string;
     const { rows: items } = await query(
       'SELECT id, name, slug, description, base_price, image, calories, rating_avg, rating_count, category_id FROM items WHERE slug=$1 LIMIT 1;',
       [slug]
@@ -51,7 +48,7 @@ export async function GET(
     });
   } catch (e: any) {
     // Fallback to file data when DB is not configured or item not found in DB
-    const slug = params.slug;
+  const slug = context?.params?.slug as string;
     // naive slug matcher
     const normalize = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
     for (const section of menuData) {

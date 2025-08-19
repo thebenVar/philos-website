@@ -12,8 +12,8 @@ function isAuthed() {
   return verifySessionToken(ck);
 }
 
-export async function GET(_: NextRequest, { params }: { params: { id: string } }) {
-  const id = Number(params.id);
+export async function GET(_: NextRequest, context: any) {
+  const id = Number(context?.params?.id);
   if (!Number.isFinite(id)) return NextResponse.json({ error: 'invalid id' }, { status: 400 });
   try {
     const { rows } = await query('SELECT id, name, sort_order, hero_image FROM categories WHERE id=$1;', [id]);
@@ -24,9 +24,9 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
   }
 }
 
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, context: any) {
   if (!isAuthed()) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
-  const id = Number(params.id);
+  const id = Number(context?.params?.id);
   const body = await req.json();
   const name = body?.name as string | undefined;
   const sort = body?.sort_order as number | undefined;
@@ -37,9 +37,9 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   return NextResponse.json({ ok: true });
 }
 
-export async function DELETE(_: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(_: NextRequest, context: any) {
   if (!isAuthed()) return NextResponse.json({ error: 'unauthorized' }, { status: 401 });
-  const id = Number(params.id);
+  const id = Number(context?.params?.id);
   await query('DELETE FROM categories WHERE id=$1;', [id]);
   return NextResponse.json({ ok: true });
 }
