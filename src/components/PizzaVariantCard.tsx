@@ -12,6 +12,8 @@ export interface PizzaVariantCardProps {
   onAddToCart: (item: MenuItem, quantity: number) => void;
   onShowAddons?: (item: MenuItem) => void;
   addons: MenuItem[]; // list of available addons to compute compatibility
+  onShowDetails?: (item: MenuItem, category?: string) => void;
+  category?: string;
 }
 
 function parseSize(name: string): string | null {
@@ -37,7 +39,7 @@ function resolveImage(src?: string | null, fallbackName?: string | null): string
   return '/placeholders/menu-item.svg';
 }
 
-export default function PizzaVariantCard({ baseName, variants, cart, onAddToCart, onShowAddons, addons }: PizzaVariantCardProps) {
+export default function PizzaVariantCard({ baseName, variants, cart, onAddToCart, onShowAddons, addons, onShowDetails, category }: PizzaVariantCardProps) {
   // Sort variants by numeric size if possible: 8" < 10" < 12"
   const sorted = useMemo(() => {
     return [...variants].sort((a, b) => {
@@ -66,7 +68,11 @@ export default function PizzaVariantCard({ baseName, variants, cart, onAddToCart
   return (
     <div className="bg-bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
       {/* Image */}
-      <div className="relative w-full aspect-[4/3] bg-gray-100">
+      <div
+        className={`relative w-full aspect-[4/3] bg-gray-100 ${onShowDetails ? 'cursor-pointer' : ''}`}
+        onClick={() => onShowDetails && onShowDetails(selected, category)}
+        role={onShowDetails ? 'button' : undefined}
+      >
         <Image
           src={resolveImage(selected.image, selected.name)}
           alt={selected.name}
@@ -78,7 +84,12 @@ export default function PizzaVariantCard({ baseName, variants, cart, onAddToCart
 
       <div className="p-6 flex-grow">
         <div className="flex justify-between items-start mb-4">
-          <h3 className="text-lg font-semibold text-text-primary leading-tight pr-4">{baseName}</h3>
+          <h3
+            className={`text-lg font-semibold text-text-primary leading-tight pr-4 ${onShowDetails ? 'cursor-pointer' : ''}`}
+            onClick={() => onShowDetails && onShowDetails(selected, category)}
+          >
+            {baseName}
+          </h3>
           <div className="flex items-center space-x-2 flex-shrink-0">
             {veg && (
               <span className="inline-block w-4 h-4 bg-green-500 rounded-full border-2 border-white" title="Vegetarian" />

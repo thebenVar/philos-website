@@ -229,6 +229,8 @@ export default function MenuPage() {
                           onAddToCart={addToCart}
                           onShowAddons={showAddons}
                           addons={addons}
+                          onShowDetails={showItemDetails}
+                          category={section.category}
                         />
                       ))
                     ) : (
