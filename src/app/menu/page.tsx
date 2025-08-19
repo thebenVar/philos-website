@@ -15,6 +15,7 @@ import FilterBar from '../../components/FilterBar';
 import CartModal from '../../components/CartModal';
 import AddonModal from '../../components/AddonModal';
 import PizzaVariantCard from '../../components/PizzaVariantCard';
+import ItemDetailsModal from '../../components/ItemDetailsModal';
 
 export default function MenuPage() {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -22,6 +23,8 @@ export default function MenuPage() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [showAddonModal, setShowAddonModal] = useState<boolean>(false);
+  const [showDetails, setShowDetails] = useState<boolean>(false);
+  const [detailsCategory, setDetailsCategory] = useState<string | undefined>(undefined);
   const [dietFilter, setDietFilter] = useState<string>('All');
   const [showCartModal, setShowCartModal] = useState<boolean>(false);
 
@@ -93,6 +96,17 @@ export default function MenuPage() {
   const showAddons = (item: MenuItem) => {
     setSelectedItem(item);
     setShowAddonModal(true);
+  };
+
+  const showItemDetails = (item: MenuItem, category?: string) => {
+    setSelectedItem(item);
+    setDetailsCategory(category);
+    setShowDetails(true);
+    // Optional: update hash for deep link
+    try {
+      const slug = (item.name || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      history.replaceState(null, '', `#${slug}`);
+    } catch {}
   };
 
   const handleAddWithAddons = (item: MenuItem, selectedAddons: MenuItem[]) => {
@@ -221,7 +235,7 @@ export default function MenuPage() {
                       // Fallback to non-pizza regular cards
                       section.items.map((item) => {
                         const compatibleAddons = getCompatibleAddons(item, addons);
-                        return (
+            return (
                           <MenuItemCard
                             key={item.name}
                             item={item}
@@ -230,6 +244,7 @@ export default function MenuPage() {
                             onShowAddons={compatibleAddons.length > 0 ? showAddons : undefined}
                             compatibleAddons={compatibleAddons}
                             category={section.category}
+              onShowDetails={showItemDetails}
                           />
                         );
                       })
@@ -264,6 +279,17 @@ export default function MenuPage() {
           onAddToCart={handleAddWithAddons}
           cart={cart}
           dietFilter={dietFilter}
+        />
+
+        <ItemDetailsModal
+          isOpen={showDetails}
+          onClose={() => setShowDetails(false)}
+          item={selectedItem}
+          category={detailsCategory}
+          cart={cart}
+          onAddToCart={addToCart}
+          addons={addons}
+          onShowAddons={showAddons}
         />
       </div>
     </div>
