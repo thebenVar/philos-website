@@ -46,6 +46,7 @@ export async function GET() {
 
     const data = categories.map(c => ({
       category: c.name,
+      heroImage: c.hero_image || undefined,
       items: itemsByCategory[c.id] || []
     }));
 

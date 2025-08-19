@@ -30,7 +30,7 @@ export default function MenuCategoryHeader({ category, itemCount }: MenuCategory
     return null;
   };
 
-  const bannerSrc = imageMap[category.category] || inferredFromItems() || '/gallery/restaurant.png';
+  const bannerSrc = (category as any).heroImage || imageMap[category.category] || inferredFromItems() || '/gallery/restaurant.png';
 
   return (
     <div className="mb-10">

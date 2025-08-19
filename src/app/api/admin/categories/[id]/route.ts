@@ -16,7 +16,7 @@ export async function GET(_: NextRequest, { params }: { params: { id: string } }
   const id = Number(params.id);
   if (!Number.isFinite(id)) return NextResponse.json({ error: 'invalid id' }, { status: 400 });
   try {
-    const { rows } = await query('SELECT id, name, sort_order FROM categories WHERE id=$1;', [id]);
+    const { rows } = await query('SELECT id, name, sort_order, hero_image FROM categories WHERE id=$1;', [id]);
     if (!rows[0]) return NextResponse.json({ error: 'not found' }, { status: 404 });
     return NextResponse.json({ data: rows[0] });
   } catch (e: any) {
@@ -30,8 +30,10 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   const body = await req.json();
   const name = body?.name as string | undefined;
   const sort = body?.sort_order as number | undefined;
+  const hero = (body?.hero_image ?? undefined) as string | undefined;
   if (name !== undefined) await query('UPDATE categories SET name=$1 WHERE id=$2;', [name, id]);
   if (sort !== undefined) await query('UPDATE categories SET sort_order=$1 WHERE id=$2;', [sort, id]);
+  if (hero !== undefined) await query('UPDATE categories SET hero_image=$1 WHERE id=$2;', [hero || null, id]);
   return NextResponse.json({ ok: true });
 }
 

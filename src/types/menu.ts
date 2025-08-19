@@ -13,6 +13,8 @@ export interface MenuItem {
 
 export interface MenuCategory {
   category: string;
+  // Optional per-category hero image (URL or path under /public)
+  heroImage?: string;
   items: MenuItem[];
 }
 

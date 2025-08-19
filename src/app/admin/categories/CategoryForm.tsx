@@ -2,13 +2,14 @@
 import React, { useState } from 'react';
 
 type Props = {
-  initial?: { id?: number; name: string; sort_order: number } | null;
+  initial?: { id?: number; name: string; sort_order: number; hero_image?: string | null } | null;
   baseUrl: string;
 };
 
 export default function CategoryForm({ initial, baseUrl }: Props) {
   const [name, setName] = useState(initial?.name ?? '');
   const [sort, setSort] = useState<number>(initial?.sort_order ?? 0);
+  const [hero, setHero] = useState<string>(initial?.hero_image ?? '');
   const [status, setStatus] = useState<string>('');
   const [submitting, setSubmitting] = useState(false);
 
@@ -24,7 +25,7 @@ export default function CategoryForm({ initial, baseUrl }: Props) {
       const res = await fetch(url, {
         method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: name.trim(), sort_order: Number(sort) }),
+        body: JSON.stringify({ name: name.trim(), sort_order: Number(sort), hero_image: hero.trim() || null }),
       });
       if (!res.ok) {
         const j = await res.json().catch(() => ({}));
@@ -64,6 +65,16 @@ export default function CategoryForm({ initial, baseUrl }: Props) {
           onChange={(e) => setName(e.target.value)}
           required
         />
+      </div>
+      <div>
+        <label className="block text-sm mb-1">Hero Image URL or Path</label>
+        <input
+          className="w-full border border-border rounded px-3 py-2"
+          placeholder="e.g. /gallery/forno.webp or https://..."
+          value={hero}
+          onChange={(e) => setHero(e.target.value)}
+        />
+        <p className="text-xs text-text-secondary mt-1">Recommended: 1600x400 (or 4:1 ratio), WebP preferred. Place files under /public and reference with a leading slash.</p>
       </div>
       <div>
         <label className="block text-sm mb-1">Sort Order</label>
