@@ -29,7 +29,10 @@ export default function MenuPage() {
   const [showCartModal, setShowCartModal] = useState<boolean>(false);
 
   const [menuData, setMenuData] = useState(fileMenuData);
-  const addons = menuData.find(section => section.category === 'Add ons')?.items || [];
+  // Use addons from current menu data if present, otherwise fall back to file data 'Add ons'
+  const addonsFromMenu = menuData.find(section => section.category === 'Add ons')?.items;
+  const fileAddons = fileMenuData.find(section => section.category === 'Add ons')?.items || [];
+  const addons = (addonsFromMenu && addonsFromMenu.length > 0) ? addonsFromMenu : fileAddons;
 
   // Fetch from API if available
   useEffect(() => {

@@ -89,6 +89,11 @@ export default function AddonModal({
         </div>
         
         <div className="p-6 overflow-y-auto flex-grow">
+          {filteredAddons.length === 0 ? (
+            <div className="text-center text-stone-500 py-12">
+              <p>No extras available for this selection.</p>
+            </div>
+          ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {filteredAddons.map((addon) => {
               const isSelected = selectedAddons.find(a => a.name === addon.name);
@@ -128,6 +133,7 @@ export default function AddonModal({
               );
             })}
           </div>
+          )}
         </div>
 
         <div className="p-6 border-t border-stone-200 bg-stone-50">
