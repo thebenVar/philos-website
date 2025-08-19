@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { MenuCategory } from '../types/menu';
 import { imageMap } from '../data/menuData';
 import { getDishImageForName } from '../utils/menuUtils';
@@ -34,14 +35,12 @@ export default function MenuCategoryHeader({ category, itemCount }: MenuCategory
   return (
     <div className="mb-10">
       <div className="relative h-48 rounded-xl overflow-hidden shadow-lg mb-6">
-        <img 
+        <Image
           src={bannerSrc}
           alt={category.category}
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-          onError={(e) => {
-            const target = e.currentTarget as HTMLImageElement;
-            if (!target.src.endsWith('/gallery/restaurant.png')) target.src = '/gallery/restaurant.png';
-          }}
+          fill
+          className="object-cover transition-transform duration-500 hover:scale-110"
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end justify-start p-6">
           <div className="text-white">

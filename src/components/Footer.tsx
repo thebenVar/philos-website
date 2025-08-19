@@ -76,7 +76,7 @@ export default function Footer() {
   <span>© 2025 Philo&apos;s Delicacy. All rights reserved. Savor the Uniqueness.</span>
         <span className="flex items-center gap-2 mt-2 md:mt-0">
           <span className="inline-flex items-center h-8 px-3 rounded-full" style={{ background: '#e0e7ef' }}>
-            <img src="/fssai.png" alt="FSSAI Logo" className="h-6 w-6 object-contain mr-2" />
+            <Image src="/fssai.png" alt="FSSAI Logo" width={24} height={24} className="object-contain mr-2" />
             <span className="text-xs font-semibold text-accent-gold tracking-wider">11325007000632</span>
           </span>
         </span>

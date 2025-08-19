@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from 'react';
+import Image from 'next/image';
 import { CartItem, MenuItem } from '../types/menu';
 import { isVegetarian, getCompatibleAddons, getDishImageForName, getImageDerivativePath } from '../utils/menuUtils';
 
@@ -66,19 +67,12 @@ export default function PizzaVariantCard({ baseName, variants, cart, onAddToCart
     <div className="bg-bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full">
       {/* Image */}
       <div className="relative w-full aspect-[4/3] bg-gray-100">
-        <img
+        <Image
           src={resolveImage(selected.image, selected.name)}
           alt={selected.name}
-          className="absolute inset-0 w-full h-full object-cover"
-          onError={(e) => {
-            const target = e.currentTarget as HTMLImageElement;
-            if (!/idontknow\.jpg$|\/placeholders\/menu-item\.svg$/.test(target.src) && /pizza/i.test(selected.name)) {
-              target.src = '/dishes/idontknow.jpg';
-              return;
-            }
-            if (!target.src.endsWith('/placeholders/menu-item.svg')) target.src = '/placeholders/menu-item.svg';
-          }}
-          loading="lazy"
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
         />
       </div>
 

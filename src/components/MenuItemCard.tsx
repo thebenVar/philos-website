@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import { MenuItem, CartItem } from '../types/menu';
 import { getBaseImageForItem, getImageDerivativePath } from '../utils/menuUtils';
 
@@ -68,17 +69,12 @@ export default function MenuItemCard({
     <div className="bg-bg-white rounded-xl shadow-md border border-border/60 overflow-hidden hover:shadow-2xl hover:-translate-y-0.5 transition duration-300 flex flex-col h-full">
       {/* Image */}
       <div className={imageWrapperClasses} onClick={handleImageClick} role={onShowDetails ? 'button' : undefined}>
-        {/* Using native img to avoid external domain config; works for public/ assets */}
-        <img
+        <Image
           src={getImageSrc((item as any).image)}
           alt={item.name}
-          className="absolute inset-0 w-full h-full object-cover"
-          onError={(e) => {
-            const target = e.currentTarget as HTMLImageElement;
-            if (target.src.endsWith('/placeholders/menu-item.svg')) return;
-            target.src = '/placeholders/menu-item.svg';
-          }}
-          loading="lazy"
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
         />
       </div>
 
