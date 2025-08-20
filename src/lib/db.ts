@@ -4,8 +4,20 @@ let _pool: Pool | null = null;
 
 const getPool = () => {
   if (_pool) return _pool;
-  const connectionString = process.env.POSTGRES_URL;
-  _pool = new Pool({ connectionString });
+  const connectionString =
+    process.env.POSTGRES_URL ||
+    process.env.DATABASE_URL ||
+    process.env.VERCEL_POSTGRES_URL;
+  if (!connectionString) {
+    throw new Error('Database connection string not set. Please define POSTGRES_URL (or DATABASE_URL) in environment.');
+  }
+  // In Vercel/production, many PG providers require SSL.
+  // Allow configuring via POSTGRES_URL plus ssl in production.
+  const sslRequired = process.env.NODE_ENV === 'production' || process.env.VERCEL;
+  _pool = new Pool({
+    connectionString,
+    ssl: sslRequired ? { rejectUnauthorized: false } : undefined,
+  } as any);
   return _pool;
 };
 
