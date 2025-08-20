@@ -8,10 +8,8 @@ export default async function AdminHome() {
     return (
       <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow">
         <h2 className="text-xl font-bold mb-4">Admin Login</h2>
-        <form className="space-y-3" action="/admin/login" method="post">
-          <input type="password" name="password" placeholder="Password" className="w-full border border-border rounded px-3 py-2" />
-          <button formAction="/admin/login" className="w-full bg-primary-red text-white py-2 rounded">Login</button>
-        </form>
+  <p className="text-text-secondary mb-4">You need to sign in to access the admin dashboard.</p>
+  <a href="/admin/login" className="w-full inline-block text-center bg-primary-red text-white py-2 rounded">Go to Login</a>
       </div>
     );
   }
